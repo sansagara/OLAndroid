@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_im_returning">Estoy Afiliado</string>
+    <string name="home_im_new">Soy Nuevo</string>
+    <string name="home_device_screenshot">Captura de dispositivo</string>
+    <string name="action_settings">Configuracion</string>
+    <string name="home_welcome_text">Afiliate para que puedas comprar a precios locos</string>
+    <string name="home_welcome_text2">como este:</string>
+    <string name="login_header_text">¡Compra productos como este, con hasta</string>
+    <string name="login_header_text2">de descuento!</string>
+    <string name="login_username_hint">Ingresa un nombre de usuario</string>
+    <string name="login_email_hint">Ingresa tu correo electrónico</string>
+    <string name="login_password1_hint">Crea tu clave</string>
+    <string name="login_password2_hint">Confirma tu clave</string>
+    <string name="facebook_login">Entrar con Facebook</string>
+    <string name="login_create_account">Crea tu Cuenta</string>
+    <string name="toast_password_mismatch">Las contraseñas no coinciden!</string>
+</resources>

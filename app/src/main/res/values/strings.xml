@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name" translatable="false">OfertaLoca</string>
+    <string name="action_settings">Settings</string>
+    <string name="home_logo" translatable="false">Logo</string>
+    <string name="home_device_screenshot">Device Screenshot</string>
+    <string name="home_im_new">I\'m New</string>
+    <string name="home_im_returning">I\'m Affiliated</string>
+    <string name="home_welcome_text">Register so you can buy at crazy prices</string>
+    <string name="home_welcome_text2">like this:</string>
+    <string name="login_header_text">Buy products like this, with till</string>
+    <string name="login_header_text_percentage" translatable="false">95%</string>
+    <string name="login_header_text2">discount!</string>
+    <string name="login_username_hint">Type a username</string>
+    <string name="login_email_hint">Type your e-mail</string>
+    <string name="login_password1_hint">Create a password</string>
+    <string name="login_password2_hint">Confirm your password</string>
+    <string name="login_header_text_iphone" translatable="false">iPhone 6 64GB</string>
+    <string name="login_header_text_iphone_desc" translatable="false">Space Gray</string>
+    <string name="facebook_login">Login with Facebook</string>
+    <string name="login_create_account">Create Account</string>
+    <string name="facebook_app_id" translatable="false">480804465450769</string>
+    <string name="toast_password_mismatch">Password don\'t match!</string>
+
+    <string name="api_route" translatable="false">http://10.0.3.125:8080/api/v1/</string>
+    <string name="api_route_registeremail" translatable="false">http://10.0.3.125:8080/api/v1/clients/unit/game/user/registeremail</string>
+    <string name="api_route_registerfb" translatable="false">http://10.0.3.125:8080/api/v1/clients/unit/game/user/registerfb</string>
+
+</resources>

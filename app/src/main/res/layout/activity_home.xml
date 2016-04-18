@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    tools:context="com.example.sansagara.testapp.Home">
+
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_alignParentBottom="true"
+    android:id="@+id/bottomlayout">
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/mainBlue" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/home_im_new"
+        android:id="@+id/new_client"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="@color/mainBlue"
+        android:background="@drawable/button_selector_light"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/home_im_returning"
+        android:id="@+id/returning_client"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_selector_dark"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:layout_above="@id/bottomlayout"
+        android:layout_marginBottom="20dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+            <ImageView
+                android:layout_width="157dp"
+                android:layout_height="179dp"
+                android:id="@+id/logo"
+                android:contentDescription="@string/home_device_screenshot"
+                android:src="@drawable/logo"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/logo"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/home_welcome_text"
+                android:textAllCaps="true"
+                android:id="@+id/home_welcome_text"
+                android:layout_gravity="center"
+                android:layout_centerHorizontal="true"
+                android:textAlignment="center" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/home_welcome_text"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/home_welcome_text2"
+                android:id="@+id/home_welcome_text2"
+                android:layout_centerHorizontal="true" />
+
+            <ImageView
+                android:layout_width="148dp"
+                android:layout_height="183dp"
+                android:id="@+id/imageView"
+                android:layout_below="@id/home_welcome_text2"
+                android:contentDescription="@string/home_logo"
+                android:src="@drawable/home_iphone"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"/>
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
