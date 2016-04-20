@@ -10,82 +10,89 @@
     tools:context="com.example.sansagara.testapp.SignupActivity"
     android:orientation="vertical">
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_weight="1">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="@string/login_header_text"
-        android:id="@+id/login_header_text"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="@string/login_header_text_percentage"
-        android:layout_below="@id/login_header_text"
-        android:id="@+id/login_header_text_pecentage"
-        android:textColor="@color/colorAccent"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="@string/login_header_text2"
-        android:layout_below="@id/login_header_text_pecentage"
-        android:id="@+id/login_header_text2"/>
-
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/imageView2"
-        android:layout_below="@+id/login_header_text2"
-        android:src="@drawable/home_iphone" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="@string/login_header_text_iphone"
-        android:layout_below="@id/imageView2"
-        android:id="@+id/login_header_text_iphone" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="@string/login_header_text_iphone_desc"
-        android:layout_below="@id/login_header_text_iphone"
-        android:id="@+id/login_header_text_iphone_desc"
-        android:layout_marginBottom="10dp"/>
-
-    <com.facebook.login.widget.LoginButton
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/facebook_login"
-        android:id="@+id/facebook_login"
-        android:textColor="#FFFFFF"
-        android:background="@drawable/button_dark"
-        android:layout_below="@id/login_header_text_iphone_desc"
-        android:layout_marginBottom="10dp"/>
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/mainBlue"
-        android:layout_below="@id/facebook_login"
-        android:layout_marginBottom="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/login_header_text"
+            android:id="@+id/login_header_text"/>
 
-</RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/login_header_text_percentage"
+            android:layout_below="@id/login_header_text"
+            android:id="@+id/login_header_text_pecentage"
+            android:textColor="@color/colorAccent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/login_header_text2"
+            android:layout_below="@id/login_header_text_pecentage"
+            android:id="@+id/login_header_text2"/>
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="120dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/imageView2"
+            android:layout_below="@+id/login_header_text2"
+            android:src="@drawable/home_iphone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/login_header_text_iphone"
+            android:layout_below="@id/imageView2"
+            android:id="@+id/login_header_text_iphone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/login_header_text_iphone_desc"
+            android:layout_below="@id/login_header_text_iphone"
+            android:id="@+id/login_header_text_iphone_desc"
+            android:layout_marginBottom="10dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+            <com.facebook.login.widget.LoginButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/facebook_login"
+                android:id="@+id/facebook_login"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/button_dark"
+                android:layout_marginBottom="10dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/mainBlue"
+                android:layout_below="@id/facebook_login"
+                android:layout_marginBottom="10dp"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_weight="1">
 
         <EditText
@@ -131,18 +138,23 @@
             android:inputType="textPassword"
             android:layout_below="@id/password"
             android:background="@drawable/edittext_light"
-            android:layout_marginBottom="10dp"
             android:id="@+id/confirmpassword"
             android:hint="@string/login_password2_hint"/>
 
-        <Button
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/login_create_account"
-            android:textColor="#FFFFFF"
-            android:id="@+id/create_account"
-            android:layout_below="@id/confirmpassword"
-            android:background="@color/mainBlue"/>
+            android:layout_alignParentBottom="true">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/login_create_account"
+                android:textColor="@drawable/button_text_dark"
+                android:id="@+id/create_account"
+                android:background="@drawable/button_selector_dark"/>
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
