@@ -21,8 +21,9 @@
     <string name="facebook_app_id" translatable="false">480804465450769</string>
     <string name="toast_password_mismatch">Password don\'t match!</string>
 
-    <string name="api_route" translatable="false">http://10.0.3.125:8080/api/v1/</string>
-    <string name="api_route_registeremail" translatable="false">http://10.0.3.125:8080/api/v1/clients/unit/game/user/registeremail</string>
-    <string name="api_route_registerfb" translatable="false">http://10.0.3.125:8080/api/v1/clients/unit/game/user/registerfb</string>
+    <string name="api_route" translatable="false">http://10.0.3.113:9020/api/v1/</string>
+    <string name="api_route_registeremail" translatable="false">http://10.0.3.113:9020/api/v1/clients/unit/game/user/registeremail</string>
+    <string name="api_route_registerfb" translatable="false">http://10.0.3.113:9020/api/v1/clients/unit/game/user/registerfb</string>
+    <string name="toast_creating_account">Creating Account...</string>
 
 </resources>

@@ -1,9 +1,7 @@
 package com.example.sansagara.testapp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,15 +22,7 @@ import com.facebook.login.widget.LoginButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import tools.SendJSONDataToServer;
 
 public class SignupActivity extends AppCompatActivity {
     CallbackManager callbackManager;
@@ -103,12 +93,12 @@ public class SignupActivity extends AppCompatActivity {
         InputText3.setTypeface(typeFace);
         InputText4.setTypeface(typeFace);
 
-        Button createAccountButton = (Button) findViewById(R.id.create_account);
+        final Button createAccountButton = (Button) findViewById(R.id.create_account);
         createAccountButton.setOnClickListener( new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-
+                //createAccountButton.setEnabled(false);
                 //function in the activity that corresponds to the layout button
                 String login = InputText1.getText().toString();
                 String email = InputText2.getText().toString();
@@ -117,6 +107,7 @@ public class SignupActivity extends AppCompatActivity {
                 //Check passwords are the same!
                 if ((confirmpassword == null) || !password.equals(confirmpassword)) {
                     Toast.makeText(getApplicationContext(), getString(R.string.toast_password_mismatch), Toast.LENGTH_LONG).show();
+                    //createAccountButton.setEnabled(true);
                     return;
                 }
 
@@ -128,6 +119,7 @@ public class SignupActivity extends AppCompatActivity {
 
     } // End OnCreate
 
+
     //Get Facebook Result
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -135,9 +127,17 @@ public class SignupActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
         Log.i("Error", "Request code is " + requestCode + " ResultCode is " + resultCode + " And the data is " + data.getDataString());
 
-    }
+    } // End onActivityResult method
 
 
+    /**
+     * Create the client with a call to AsyncTask
+     * @param login the user login
+     * @param email the user email
+     * @param password the user (confirmed) password
+     * @param facebookId the user facebookid
+     * @param isFacebookLogin if the create is with facebook (true) or with email (false).
+     */
     public void CreateClient(String login, String email, String password, String facebookId, Boolean isFacebookLogin) {
         JSONObject createUserJSON = new JSONObject();
         try {
@@ -152,125 +152,15 @@ public class SignupActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        //If the JSON is actually filled.
         if (createUserJSON.length() > 0) {
-            new SendJSONDataToServer(getApplicationContext(), isFacebookLogin).execute(String.valueOf(createUserJSON));
+            Toast.makeText(getApplicationContext(), getString(R.string.toast_creating_account), Toast.LENGTH_LONG).show();
             //call to async class
+            new SendJSONDataToServer(getApplicationContext(), isFacebookLogin).execute(String.valueOf(createUserJSON));
         }
 
-    }
+    } // End CreateClient Method
 
 } // End SignupActivity Class
 
 
-//Async send data to Server
-//@params[0] = The JSON to Send!
-class SendJSONDataToServer extends AsyncTask <String,String,String>{
-
-    //Get the Context for the Toast
-    private final Boolean isFacebookLogin;
-    private final String ApiRoute;
-    private final Context context;
-
-    //Constructor with Context
-    public SendJSONDataToServer(Context context, Boolean isFacebookLogin)
-    {
-        this.context=context;
-        this.isFacebookLogin = isFacebookLogin;
-        if (isFacebookLogin) {
-            this.ApiRoute = context.getString(R.string.api_route_registerfb);
-        } else {
-            this.ApiRoute = context.getString(R.string.api_route_registeremail);
-        }
-
-    }
-
-    @Override
-    protected String doInBackground(String... params) {
-        String JsonResponse = null;
-        String JsonDATA = params[0];
-        HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
-
-        try {
-            URL url = new URL( ApiRoute);
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setDoOutput(true);
-
-            // is output buffer writer
-            urlConnection.setRequestMethod("POST");
-            urlConnection.setRequestProperty("Host", "myhost.com");
-            urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; PPC; en-US; rv:1.3.1)");
-            urlConnection.setRequestProperty("Content-Type", "application/json");
-            urlConnection.setRequestProperty("Accept", "application/json");
-            urlConnection.setRequestProperty("Accept-Charset", "UTF-8");
-
-            //set headers and method
-            Writer writer = new BufferedWriter(new OutputStreamWriter(urlConnection.getOutputStream(), "UTF-8"));
-            writer.write(JsonDATA);
-
-            // json data
-            writer.close();
-            InputStream inputStream = urlConnection.getInputStream();
-
-            //input stream
-            StringBuffer buffer = new StringBuffer();
-            if (inputStream == null) {
-                Toast.makeText(context, "Error connecting to REST Service", Toast.LENGTH_LONG).show();
-                return null;
-            }
-
-            reader = new BufferedReader(new InputStreamReader(inputStream));
-
-            String inputLine;
-            while ((inputLine = reader.readLine()) != null)
-                buffer.append(inputLine + "\n");
-            if (buffer.length() == 0) {
-                // Stream was empty. No point in parsing.
-                Toast.makeText(context, "Empty Stream", Toast.LENGTH_LONG).show();
-                return null;
-            }
-            JsonResponse = buffer.toString();
-
-            if (JsonResponse.isEmpty()) {
-                // JsonResponse was empty. No point in parsing.
-                Toast.makeText(context, "Empty Response", Toast.LENGTH_LONG).show();
-                return null;
-            }
-            //response data!.
-            Log.i("JSON: ",JsonResponse);
-            return JsonResponse;
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        finally {
-
-            if (urlConnection != null) {
-                urlConnection.disconnect();
-            }
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (final IOException e) {
-                    Log.e("Error: ", "Error closing stream", e);
-                }
-            }
-
-        } //End finally
-        return null;
-    }
-
-
-    @Override
-    protected void onPostExecute(String JSONResponse) {
-        Toast.makeText(context, "Post Executed: " + JSONResponse, Toast.LENGTH_LONG).show();
-
-        //Call MainActivity
-        Intent intent = new Intent(context.getApplicationContext(), MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-
-    }
-
-}
