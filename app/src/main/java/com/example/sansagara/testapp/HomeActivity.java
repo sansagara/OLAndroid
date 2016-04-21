@@ -51,7 +51,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent myIntent = new Intent(HomeActivity.this, SMSubscribeActivity.class);
+                Intent myIntent = new Intent(HomeActivity.this, MegapopActivity.class);
                 HomeActivity.this.startActivity(myIntent);
 
             }
