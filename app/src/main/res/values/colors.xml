@@ -3,12 +3,12 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="mainBlue">#1262ac</color>
-    <color name="lightBlue">#1262ac</color>
+    <color name="mainBlue">#1263ac</color>
+    <color name="lightBlue">#1263ac</color>
     <color name="white">#FFFFFF</color>
     <color name="gray">#D3D3D3</color>
     <color name="darkGray">#939393</color>
-    <color name="priceBoxBackground">#e4ebf6</color>
+    <color name="priceBoxBackground">#e5ebf6</color>
     <color name="priceBoxPrice">#b31f24</color>
     <color name="black">#000000</color>
 </resources>

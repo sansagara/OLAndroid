@@ -15,6 +15,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:clickable="true"
         android:id="@+id/CardView">
 
         <RelativeLayout
@@ -99,7 +100,7 @@
     </android.support.v7.widget.CardView>
 
     <ImageView
-        android:id="@+id/fab"
+        android:id="@+id/padlock"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@drawable/padlock"
