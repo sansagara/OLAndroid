@@ -132,7 +132,7 @@ public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
         //Timer handling
         final TextView timeRemaining = holder.timeRemaining;
         Runnable hMyTimeTask = new Runnable() {
-            int nCounter = 10;
+            int nCounter = product.getRemainingTime();
             public void run() {
                 nCounter--;
                 timeRemaining.setText("00:00:" + String.format("%02d", nCounter));
@@ -146,7 +146,7 @@ public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
             }
         };
 
-        //Start timer inmediately
+        //Start timer immediately
         mHandler.post(hMyTimeTask);
 
 

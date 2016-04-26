@@ -100,22 +100,25 @@ public class GetJSONDataFromServer extends AsyncTask<String,String,String> {
                 //Toast.makeText(context, "Description:" + description, Toast.LENGTH_SHORT).show();
 
                 //Get response object node from JSON.
-                JSONArray products = JSONResponse.getJSONArray("response");
-                ArrayList products_array = new ArrayList<>();
-                for (int i = 0; i < products.length(); ++i) {
-                    JSONObject product = products.getJSONObject(i);
-                    int id = product.getInt("id_auction");
-                    String product_name = product.getString("product_name");
-                    String product_description = product.getString("product_description");
-                    Double product_market_price = product.getDouble("market_price");
-                    Double product_accumulated_price = product.getDouble("acumulated_price");
-                    Integer product_status = product.getInt("status");
-                    String product_image_url = product.getJSONArray("product_images").getJSONObject(0).getString("url");
+                JSONArray auctions = JSONResponse.getJSONArray("response");
+                ArrayList auctions_array = new ArrayList<>();
+                for (int i = 0; i < auctions.length(); ++i) {
+                    JSONObject auction_data = auctions.getJSONObject(i);
+                    int auction_id = auction_data.getInt("id_auction");
+                    String product_name = auction_data.getString("product_name");
+                    String product_description = auction_data.getString("product_description");
+                    Double product_market_price = auction_data.getDouble("market_price");
+                    String product_image_url = auction_data.getJSONArray("product_images").getJSONObject(0).getString("url");
 
-                    products_array.add(new Product(product_name, product_description, product_market_price, product_accumulated_price, product_status, product_image_url));
+                    int remaining_time = auction_data.getInt("time_remaining");
+                    Double accumulated_price = auction_data.getDouble("acumulated_price");
+                    Integer status = auction_data.getInt("status");
+
+
+                    auctions_array.add(new Auction(product_name, product_description, product_market_price, accumulated_price, product_image_url, status, remaining_time));
                 }
 
-                delegate.processFinish(products_array);
+                delegate.processFinish(auctions_array);
 
                 //Toast.makeText(context, "Response:" + response2.toString(), Toast.LENGTH_LONG).show();
 
