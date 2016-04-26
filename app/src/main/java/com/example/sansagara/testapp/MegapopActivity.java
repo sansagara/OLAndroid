@@ -72,10 +72,10 @@ public class MegapopActivity extends AppCompatActivity implements AsyncResponse 
 
 
     @Override  //this override the implemented method from asyncTask
-    public void processFinish(ArrayList products_array) {
+    public void processFinish(ArrayList auctions_array) {
 
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        mAdapter = new MyRVAdapter(getApplicationContext(), products_array);
+        mAdapter = new MyRVAdapter(getApplicationContext(), auctions_array);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));

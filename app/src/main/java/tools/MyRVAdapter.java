@@ -18,16 +18,15 @@ import com.example.sansagara.testapp.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import tools.DownloadImageTask;
 
 /**
  * Created by sansagara on 22/04/16.
- * This Class extends Recicler View.
- * Used to adapt a Recicler View with some cards inside it, and set the content for a list of products.
+ * This Class extends Recycler View.
+ * Used to adapt a Recycler View with some cards inside it, and set the content for a list of products.
  * @param: the context it is being called from, to display a Toast or Dialog.
  */
 public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
-    private List<Product> products;
+    private List<Auction> auctions;
     private Context context;
 
     // Provide a reference to the views for each data item
@@ -61,9 +60,9 @@ public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
         this.context = context;
 
         // Create some items
-        products = new ArrayList<>();
+        auctions = new ArrayList<>();
         for (int i = 0; i < 20; ++i) {
-            products.add(new Product("Item " + i, "This is the item number " + i));
+            auctions.add(new Auction("Product " + i, "Description for Product " + i));
         }
 
         //new GetJSONDataFromServer(context).execute("Hello");
@@ -71,12 +70,12 @@ public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
     }
 
     // Constructor for the Data from Rest Service
-    public MyRVAdapter(Context context, ArrayList products_array) {
+    public MyRVAdapter(Context context, ArrayList auctions_array) {
         //Set the context.
         this.context = context;
 
         // Provide the items.
-        products = products_array;
+        auctions = auctions_array;
 
     }
 
@@ -95,19 +94,19 @@ public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
     public void onBindViewHolder(final ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        final Product product = products.get(position);
+        final Auction auction = auctions.get(position);
 
         //Set the title, subtitle and padlock icon style for each card.
 
-        holder.title.setText(product.getName());
-        holder.subtitle.setText(product.getDescription());
-        holder.accumulatedPrice.setText( String.format("%.2f", product.getAccumulated_price() ) );
+        holder.title.setText(auction.getName());
+        holder.subtitle.setText(auction.getDescription());
+        holder.accumulatedPrice.setText( String.format("%.2f", auction.getAccumulated_price() ) );
 
         //Set Blue padlock if status is positive.
-        if (product.getStatus() > 0) holder.padlock.setImageResource(R.drawable.padlock2);
+        if (auction.getStatus() > 0) holder.padlock.setImageResource(R.drawable.padlock2);
 
         //Async download image.
-        new DownloadImageTask(holder.productImage).execute(product.getImage_url());
+        new DownloadImageTask(holder.productImage).execute(auction.getImage_url());
 
 
         //Get a click listener on each card.
@@ -116,11 +115,11 @@ public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
             public void onClick(View v) {
                 //Show toast on Click.
                 Toast.makeText(context,
-                        "Name: " + product.getName() +
-                        " Desc: " + product.getDescription() +
-                        " AccPrice:" + product.getAccumulated_price() +
-                        " MktPrice:" + product.getMarket_price() +
-                        "Status: " + product.getStatus(),
+                        "Name: " + auction.getName() +
+                        " Desc: " + auction.getDescription() +
+                        " AccPrice:" + auction.getAccumulated_price() +
+                        " MktPrice:" + auction.getMarket_price() +
+                        "Status: " + auction.getStatus(),
                         Toast.LENGTH_SHORT).show();
 
             }
@@ -132,7 +131,7 @@ public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
         //Timer handling
         final TextView timeRemaining = holder.timeRemaining;
         Runnable hMyTimeTask = new Runnable() {
-            int nCounter = product.getRemainingTime();
+            int nCounter = auction.getRemainingTime();
             public void run() {
                 nCounter--;
                 timeRemaining.setText("00:00:" + String.format("%02d", nCounter));
@@ -156,6 +155,6 @@ public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
     // Return the size of the DataSet (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return products.size();
+        return auctions.size();
     }
 }

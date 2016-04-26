@@ -104,18 +104,21 @@ public class GetJSONDataFromServer extends AsyncTask<String,String,String> {
                 ArrayList auctions_array = new ArrayList<>();
                 for (int i = 0; i < auctions.length(); ++i) {
                     JSONObject auction_data = auctions.getJSONObject(i);
-                    int auction_id = auction_data.getInt("id_auction");
+
+                    //Product attributes
                     String product_name = auction_data.getString("product_name");
                     String product_description = auction_data.getString("product_description");
-                    Double product_market_price = auction_data.getDouble("market_price");
+                    double product_market_price = auction_data.getDouble("market_price");
                     String product_image_url = auction_data.getJSONArray("product_images").getJSONObject(0).getString("url");
 
+                    //Auction attributes.
+                    int id = auction_data.getInt("id_auction");
+                    int status = auction_data.getInt("status");
                     int remaining_time = auction_data.getInt("time_remaining");
-                    Double accumulated_price = auction_data.getDouble("acumulated_price");
-                    Integer status = auction_data.getInt("status");
+                    double accumulated_price = auction_data.getDouble("accumulated_price");
 
-
-                    auctions_array.add(new Auction(product_name, product_description, product_market_price, accumulated_price, product_image_url, status, remaining_time));
+                    //Create Auction (and Product) objects.
+                    auctions_array.add(new Auction(product_name, product_description, product_market_price, product_image_url, id, status, remaining_time, accumulated_price));
                 }
 
                 delegate.processFinish(auctions_array);
