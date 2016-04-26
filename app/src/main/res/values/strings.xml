@@ -24,6 +24,7 @@
     <string name="api_route" translatable="false">http://10.0.3.113:9020/api/v1/</string>
     <string name="api_route_registeremail" translatable="false">http://10.0.3.113:9020/api/v1/clients/unit/game/user/registeremail</string>
     <string name="api_route_registerfb" translatable="false">http://10.0.3.113:9020/api/v1/clients/unit/game/user/registerfb</string>
+    <string name="api_route_listauctions" translatable="false">http://10.0.3.149:9000/api/v1/auctions</string>
     <string name="toast_creating_account">Creating Account...</string>
     <string name="title_activity_megapop">OfertaLoca Main</string>
     <string name="large_text">

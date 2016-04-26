@@ -26,7 +26,7 @@
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/home_iphone"
-                android:id="@+id/imageView3" />
+                android:id="@+id/productImage" />
 
             <TextView
                 android:id="@+id/title"
@@ -36,7 +36,7 @@
                 android:text="Title: "
                 style="@style/Base.TextAppearance.AppCompat.Headline"
                 android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/imageView3"
+                android:layout_toEndOf="@+id/productImage"
                 android:layout_marginTop="10dp"/>
 
             <TextView
@@ -46,7 +46,7 @@
                 android:text="Subtitle: "
                 style="@style/Base.TextAppearance.AppCompat.Subhead"
                 android:layout_below="@+id/title"
-                android:layout_toEndOf="@+id/imageView3" />
+                android:layout_toEndOf="@+id/productImage" />
 
             <TextView
                 android:id="@+id/price_list"
@@ -55,7 +55,7 @@
                 android:text="List Price: 0$"
                 android:textColor="@color/mainBlue"
                 android:layout_below="@+id/subtitle"
-                android:layout_toEndOf="@+id/imageView3" />
+                android:layout_toEndOf="@+id/productImage" />
 
             <RelativeLayout
                 android:layout_width="100dp"

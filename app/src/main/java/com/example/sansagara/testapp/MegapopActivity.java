@@ -9,12 +9,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import tools.MyAdapter;
+
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import tools.AsyncResponse;
+import tools.GetJSONDataFromServer;
+import tools.MyRVAdapter;
 
 import static android.support.v7.widget.RecyclerView.*;
 
-public class MegapopActivity extends AppCompatActivity {
-
+public class MegapopActivity extends AppCompatActivity implements AsyncResponse {
     private Adapter mAdapter;
 
     @Override
@@ -23,6 +29,7 @@ public class MegapopActivity extends AppCompatActivity {
 
 
         setContentView(R.layout.activity_megapop);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -37,7 +44,7 @@ public class MegapopActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter
-        mAdapter = new MyAdapter(getApplicationContext());
+        mAdapter = new MyRVAdapter(getApplicationContext());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -52,5 +59,27 @@ public class MegapopActivity extends AppCompatActivity {
             }
         });
 
+        GetJSONDataFromServer asyncTask = new GetJSONDataFromServer(getApplicationContext(), this);
+
+        //Call Async task
+        //this to set delegate/listener back to this class
+        asyncTask.delegate = this;
+
+        //execute the async task
+        asyncTask.execute();
+
     }
+
+
+    @Override  //this override the implemented method from asyncTask
+    public void processFinish(ArrayList products_array) {
+
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        mAdapter = new MyRVAdapter(getApplicationContext(), products_array);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+
 }
