@@ -13,7 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.sansagara.testapp.R;
+import com.hecticus.ofertaloca.testapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +83,7 @@ public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
     @Override
     public MyRVAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_megapop_product, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_ofertaloca_product, parent, false);
         // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder((RelativeLayout) v);
         return vh;
@@ -106,7 +106,7 @@ public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
         if (auction.getStatus() > 0) holder.padlock.setImageResource(R.drawable.padlock2);
 
         //Async download image.
-        new DownloadImageTask(holder.productImage).execute(auction.getImage_url());
+        if (auction.getImage_url() != null) new DownloadImageTask(holder.productImage).execute(auction.getImage_url());
 
 
         //Get a click listener on each card.
@@ -131,7 +131,9 @@ public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
         //Timer handling
         final TextView timeRemaining = holder.timeRemaining;
         Runnable hMyTimeTask = new Runnable() {
+
             int nCounter = auction.getRemainingTime();
+
             public void run() {
                 nCounter--;
                 timeRemaining.setText("00:00:" + String.format("%02d", nCounter));
@@ -140,7 +142,7 @@ public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
                 if (nCounter > 0) {
                     mHandler.postDelayed(this, 1000);
                 } else {
-                    //holder.card.get;
+                    //deleteCard(holder.getAdapterPosition());
                 }
             }
         };
@@ -150,6 +152,11 @@ public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
 
 
 
+    }
+
+    //TODO: Implement some way to delete a card when desired.
+    public void deleteCard(int position) {
+       auctions.remove(position);
     }
 
     // Return the size of the DataSet (invoked by the layout manager)

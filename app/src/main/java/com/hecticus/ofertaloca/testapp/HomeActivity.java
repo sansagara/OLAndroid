@@ -1,4 +1,4 @@
-package com.example.sansagara.testapp;
+package com.hecticus.ofertaloca.testapp;
 
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -51,7 +51,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent myIntent = new Intent(HomeActivity.this, MegapopActivity.class);
+                Intent myIntent = new Intent(HomeActivity.this, OfertalocaActivity.class);
                 HomeActivity.this.startActivity(myIntent);
 
             }

@@ -6,9 +6,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.sansagara.testapp.MainActivity;
-import com.example.sansagara.testapp.R;
-import com.example.sansagara.testapp.SMSubscribeActivity;
+import com.hecticus.ofertaloca.testapp.R;
+import com.hecticus.ofertaloca.testapp.SMSubscribeActivity;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -42,9 +41,9 @@ public class SendJSONDataToServer extends AsyncTask<String,String,String> {
         this.context=context;
         this.isFacebookLogin = isFacebookLogin;
         if (isFacebookLogin) {
-            this.ApiRoute = context.getString(R.string.api_route_registerfb);
+            this.ApiRoute = context.getString(R.string.unit_server_route)+context.getString(R.string.api_route_registerfb);
         } else {
-            this.ApiRoute = context.getString(R.string.api_route_registeremail);
+            this.ApiRoute = context.getString(R.string.unit_server_route)+context.getString(R.string.api_route_registeremail);
         }
 
     } // End SendJSONDataToServer method.

@@ -1,9 +1,8 @@
-package com.example.sansagara.testapp;
+package com.hecticus.ofertaloca.testapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
-import tools.Location;
 
 public class SMSubscribeActivity extends AppCompatActivity {
 

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.example.sansagara.testapp.R;
+import com.hecticus.ofertaloca.testapp.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,7 +36,7 @@ public class GetJSONDataFromServer extends AsyncTask<String,String,String> {
      */
     public GetJSONDataFromServer(Context context, AsyncResponse delegate) {
         this.context=context;
-        this.ApiRoute = context.getString(R.string.api_route_listauctions);
+        this.ApiRoute = context.getString(R.string.ofertaloca_server_route)+context.getString(R.string.api_route_listauctions);
         this.delegate = delegate;
 
     } // End SendJSONDataToServer constructor.

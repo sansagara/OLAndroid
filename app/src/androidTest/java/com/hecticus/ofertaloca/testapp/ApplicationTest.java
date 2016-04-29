@@ -1,4 +1,4 @@
-package com.example.sansagara.testapp;
+package com.hecticus.ofertaloca.testapp;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
