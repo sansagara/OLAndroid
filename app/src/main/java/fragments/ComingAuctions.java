@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import tools.AsyncResponse;
 import tools.GetJSONDataFromServer;
-import tools.MyRVAdapter;
+import tools.MyRVAdapterComing;
 
 
 public class ComingAuctions extends Fragment implements AsyncResponse{
@@ -35,9 +35,9 @@ public class ComingAuctions extends Fragment implements AsyncResponse{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View V = inflater.inflate(R.layout.content_ofertaloca_coming, container, false);
 
-        View V = inflater.inflate(R.layout.content_ofertaloca, container, false);
-
+        //Get the RecyclerView
         RecyclerView mRecyclerView = (RecyclerView) V.findViewById(R.id.my_recycler_view);
 
         // use this setting to improve performance if you know that changes
@@ -49,12 +49,13 @@ public class ComingAuctions extends Fragment implements AsyncResponse{
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter
-        mAdapter = new MyRVAdapter(getActivity().getApplicationContext());
+        mAdapter = new MyRVAdapterComing(getActivity().getApplicationContext());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 
-        GetJSONDataFromServer asyncTask = new GetJSONDataFromServer(getActivity().getApplicationContext(), this);
+        // Call with 2 in auctionType for Coming Auctions
+        GetJSONDataFromServer asyncTask = new GetJSONDataFromServer(getActivity().getApplicationContext(), this, 2);
 
         //Call Async task
         //this to set delegate/listener back to this class
@@ -69,9 +70,8 @@ public class ComingAuctions extends Fragment implements AsyncResponse{
 
     @Override  //this override the implemented method from asyncTask
     public void processFinish(ArrayList auctions_array) {
-
         RecyclerView mRecyclerView = (RecyclerView) getView().findViewById(R.id.my_recycler_view);
-        mAdapter = new MyRVAdapter(getActivity().getApplicationContext(), auctions_array);
+        mAdapter = new MyRVAdapterComing(getActivity().getApplicationContext(), auctions_array);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));

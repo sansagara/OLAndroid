@@ -130,7 +130,7 @@ public class SendJSONDataToServer extends AsyncTask<String,String,String> {
     protected void onPostExecute(String JSONResponse) {
         if (JSONResponse != null) {
             Toast.makeText(context, "Post Executed: " + JSONResponse, Toast.LENGTH_LONG).show();
-            //Call MainActivity
+            //Call Next Activity
             Intent intent = new Intent(context.getApplicationContext(), SMSubscribeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);

@@ -21,4 +21,20 @@
     <string name="tab4">Ganadores</string>
     <string name="tab1">Todas</string>
     <string name="title_activity_megapop">Subastas</string>
+    <string name="auction_current_amount">Monto Ofertado</string>
+    <string name="auction_remaining_time">Tiempo Restante</string>
+    <string name="main_product_image">Imagen Principal de Producto</string>
+    <string name="auction_default_remainingbids">Usted dispone %1$d \n bids en su cuenta</string>
+    <string name="auction_default_price">Bs 0</string>
+    <string name="auction_bidnow">Ofertar</string>
+    <string name="auction_bidbutton_accept">Aceptar</string>
+    <string name="auction_bidprogram_text">Programar ofertas</string>
+    <string name="auction_buynowbutton_text">Comprarlo por solo %1$s</string>
+    <string name="product_name">Nombre del producto</string>
+    <string name="auction_bidprogram_edit_hint">Numero de Ofertas</string>
+    <string name="auction_maxperformance_user_pic">Foto del usuario con rendimiento más alto</string>
+    <string name="auction_maxperformance_user_text">Usuario con rendimiento más alto</string>
+    <string name="auction_maxperformance_user_name">Lois Lane</string>
+    <string name="toast_biddingnow">Ofertando por </string>
+    <string name="toast_biddingscheduled">Programando oferta por </string>
 </resources>

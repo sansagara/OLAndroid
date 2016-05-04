@@ -106,8 +106,6 @@
         android:src="@drawable/padlock"
         app:layout_anchor="@id/CardView"
         app:layout_anchorGravity="top|start"
-        android:elevation="3dp"
-        />
-
+        android:elevation="3dp" />
 
 </RelativeLayout>

@@ -34,10 +34,14 @@ public class WinnersAuctions extends Fragment implements AsyncResponse{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        //Remove previous Views from parent.
+        container.removeAllViews();
+
         // Inflate the layout for this fragment
+        View V = inflater.inflate(R.layout.content_ofertaloca_all, container, false);
 
-        View V = inflater.inflate(R.layout.content_ofertaloca, container, false);
-
+        //Get the RecyclerView
         RecyclerView mRecyclerView = (RecyclerView) V.findViewById(R.id.my_recycler_view);
 
         // use this setting to improve performance if you know that changes
@@ -54,7 +58,8 @@ public class WinnersAuctions extends Fragment implements AsyncResponse{
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 
-        GetJSONDataFromServer asyncTask = new GetJSONDataFromServer(getActivity().getApplicationContext(), this);
+        // Call with 3 in auctionType for Coming Auctions
+        GetJSONDataFromServer asyncTask = new GetJSONDataFromServer(getActivity().getApplicationContext(), this, 3);
 
         //Call Async task
         //this to set delegate/listener back to this class
@@ -69,13 +74,11 @@ public class WinnersAuctions extends Fragment implements AsyncResponse{
 
     @Override  //this override the implemented method from asyncTask
     public void processFinish(ArrayList auctions_array) {
-
         RecyclerView mRecyclerView = (RecyclerView) getView().findViewById(R.id.my_recycler_view);
         mAdapter = new MyRVAdapter(getActivity().getApplicationContext(), auctions_array);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-
     }
 
 }

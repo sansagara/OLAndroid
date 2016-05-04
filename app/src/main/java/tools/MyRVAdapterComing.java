@@ -1,10 +1,6 @@
 package tools;
 
-import android.app.Activity;
 import android.content.Context;
-
-import android.content.Intent;
-import android.os.Handler;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,10 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hecticus.ofertaloca.testapp.AuctionActivity;
-import com.hecticus.ofertaloca.testapp.OfertalocaActivity;
 import com.hecticus.ofertaloca.testapp.R;
-import com.hecticus.ofertaloca.testapp.SignupActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +23,7 @@ import java.util.List;
  * Used to adapt a Recycler View with some cards inside it, and set the content for a list of products.
  * @param: the context it is being called from, to display a Toast or Dialog.
  */
-public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
+public class MyRVAdapterComing extends RecyclerView.Adapter<MyRVAdapterComing.ViewHolder>  {
     private List<Auction> auctions;
     private Context context;
 
@@ -60,14 +53,14 @@ public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
     }
 
     // Default constructor. (First-Time load)
-    public MyRVAdapter(Context context) {
+    public MyRVAdapterComing(Context context) {
         //Set the context.
         this.context = context;
 
         // Create some items
         auctions = new ArrayList<>();
         for (int i = 0; i < 20; ++i) {
-            auctions.add(new Auction("Product " + i, "Description for Product " + i));
+            auctions.add(new Auction("Coming Product " + i, "Description for Coming Product " + i));
         }
 
         //new GetJSONDataFromServer(context).execute("Hello");
@@ -75,7 +68,7 @@ public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
     }
 
     // Constructor for the Data from Rest Service
-    public MyRVAdapter(Context context, ArrayList auctions_array) {
+    public MyRVAdapterComing(Context context, ArrayList auctions_array) {
         //Set the context.
         this.context = context;
 
@@ -86,9 +79,9 @@ public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
 
     // Create new views (invoked by the layout manager)
     @Override
-    public MyRVAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyRVAdapterComing.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_ofertaloca_all_card, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_ofertaloca_coming_card, parent, false);
         // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder((RelativeLayout) v);
         return vh;
@@ -118,52 +111,21 @@ public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
         holder.card.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            //Show toast on Click.
-                /*
+                //Show toast on Click.
                 Toast.makeText(context,
-                    "Name: " + auction.getName() +
-                    " Desc: " + auction.getDescription() +
-                    " AccPrice: " + auction.getAccumulated_price() +
-                    " MktPrice: " + auction.getMarket_price() +
-                    "Status: " + auction.getStatus(),
-                    Toast.LENGTH_SHORT).show(); */
-
-                //Go to AuctionActivity with extra params.
-                Intent intent = new Intent(context, AuctionActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("auction_id", auction.getID());
-                intent.putExtra("product_name", auction.getName());
-                context.startActivity(intent);
+                        "Name: " + auction.getName() +
+                        " Desc: " + auction.getDescription() +
+                        " AccPrice: " + auction.getAccumulated_price() +
+                        " MktPrice: " + auction.getMarket_price() +
+                        "Status2: " + auction.getStatus(),
+                        Toast.LENGTH_SHORT).show();
 
             }
         });
 
-        //Handler for timer.
-        final Handler mHandler = new Handler();
 
         //Timer handling
-        final TextView timeRemaining = holder.timeRemaining;
-        Runnable hMyTimeTask = new Runnable() {
-
-            int nCounter = auction.getRemainingTime();
-
-            public void run() {
-                nCounter--;
-                timeRemaining.setText("00:00:" + String.format("%02d", nCounter));
-
-                //Delay execution by one second!
-                if (nCounter > 0) {
-                    mHandler.postDelayed(this, 1000);
-                } else {
-                    //deleteCard(holder.getAdapterPosition());
-                }
-            }
-        };
-
-        //Start timer immediately
-        mHandler.post(hMyTimeTask);
-
-
+        holder.timeRemaining.setText("00:00:00");
 
     }
 

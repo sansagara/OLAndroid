@@ -1,5 +1,6 @@
 package com.hecticus.ofertaloca.testapp;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -7,8 +8,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
@@ -19,14 +18,9 @@ import fragments.AllAuctions;
 import fragments.ComingAuctions;
 import fragments.OpenAuctions;
 import fragments.WinnersAuctions;
-import tools.AsyncResponse;
-import tools.MyRVAdapter;
 
-import static android.support.v7.widget.RecyclerView.*;
 
-public class OfertalocaActivity extends AppCompatActivity implements AsyncResponse {
-    private Adapter mAdapter;
-    private Toolbar toolbar;
+public class OfertalocaActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
@@ -38,7 +32,7 @@ public class OfertalocaActivity extends AppCompatActivity implements AsyncRespon
         //Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         //Pager
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -46,28 +40,20 @@ public class OfertalocaActivity extends AppCompatActivity implements AsyncRespon
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-
     }
 
-
-    @Override  //this override the implemented method from asyncTask
-    public void processFinish(ArrayList auctions_array) {
-
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        mAdapter = new MyRVAdapter(getApplicationContext(), auctions_array);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-    }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+
         adapter.addFragment(new AllAuctions(), getString(R.string.tab1));
         adapter.addFragment(new OpenAuctions(), getString(R.string.tab2));
         adapter.addFragment(new ComingAuctions(), getString(R.string.tab3));
+        /*
         adapter.addFragment(new WinnersAuctions(), getString(R.string.tab4));
+        */
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(2);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
