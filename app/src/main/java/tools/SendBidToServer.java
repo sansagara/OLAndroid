@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.hecticus.ofertaloca.testapp.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,6 +20,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * Created by sansagara on 20/04/16.
@@ -170,8 +172,19 @@ public class SendBidToServer extends AsyncTask<String,String,String> {
                 int remaining_time = auction_data.getInt("time_remaining");
                 double accumulated_price = auction_data.getDouble("accumulated_price");
 
+                //Get Bids for history!.
+                JSONArray bids = JSONResponse.getJSONArray("bids_list");
+                ArrayList<Bid> bids_list = new ArrayList<>();
+                for (int i = 0; i < bids.length(); ++i) {
+                    JSONObject bid = bids.getJSONObject(i);
+                    String nickname = auction_data.getString("client");
+                    double accumulated = auction_data.getDouble("accumulated");
+                    double value = auction_data.getDouble("value");
+                    bids_list.add(new Bid(nickname, accumulated, value));
+                }
+
                 //Create Auction (and Product) objects.
-                Auction auction_detail = new Auction(product_name, product_description, product_market_price, product_image_url, id, status, remaining_time, accumulated_price);
+                Auction auction_detail = new Auction(product_name, product_description, product_market_price, product_image_url, id, status, remaining_time, accumulated_price, bids_list);
 
                 //Return the Auction Detail. This will re-draw the layout after the bid.
                 delegate.processFinish(auction_detail);

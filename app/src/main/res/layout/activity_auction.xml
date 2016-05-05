@@ -23,243 +23,274 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <!-- Main Content -->
-    <LinearLayout
-        android:layout_width="match_parent"
+    <!-- Main Content Scroller -->
+    <ScrollView
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:orientation="vertical">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <!-- First Grid (Picture)-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:layout_centerHorizontal="true"
-                android:text="@string/product_name"
-                android:id="@+id/auctionProductName"/>
-
-            <ImageView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_centerHorizontal="true"
-                android:id="@+id/auctionProductImage"
-                android:src="@drawable/home_iphone"
-                android:layout_below="@+id/auctionProductName"
-                android:contentDescription="@string/main_product_image" />
-
-        </RelativeLayout>
-        <View style="@style/Divider"/>
-
-        <!-- Second Grid (Price and Time)-->
+        <!-- Main Content -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
+            <!-- First Grid (Picture)-->
             <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
                     android:layout_centerHorizontal="true"
-                    android:text="@string/auction_default_price"
-                    android:id="@+id/currentPrice"
-                    style="@style/RedAccentBold"
-                    android:layout_centerVertical="true"/>
+                    android:text="@string/product_name"
+                    android:id="@+id/auctionProductName"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_centerHorizontal="true"
-                    android:textAllCaps="true"
-                    android:layout_below="@+id/currentPrice"
-                    android:text="@string/auction_current_amount"
-                    android:layout_centerVertical="true"/>
+                    android:id="@+id/auctionProductImage"
+                    android:src="@drawable/home_iphone"
+                    android:layout_below="@+id/auctionProductName"
+                    android:contentDescription="@string/main_product_image" />
 
             </RelativeLayout>
+            <View style="@style/Divider"/>
 
+            <!-- Second Grid (Price and Time)-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/auction_default_price"
+                        android:id="@+id/currentPrice"
+                        style="@style/RedAccentBold"
+                        android:layout_centerVertical="true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:textAllCaps="true"
+                        android:layout_below="@+id/currentPrice"
+                        android:text="@string/auction_current_amount"
+                        android:layout_centerVertical="true"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/auction_default_time"
+                        android:id="@+id/remainingTime"
+                        style="@style/RedAccentBold"
+                        android:layout_centerVertical="true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:textAllCaps="true"
+                        android:layout_below="@id/remainingTime"
+                        android:text="@string/auction_remaining_time"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+            <View style="@style/Divider" />
+
+            <!-- Third Grid (Button and Remaining Bids)-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                >
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:text="@string/auction_bidnow"
+                        android:textAllCaps="true"
+                        android:id="@+id/auction_bidnow"
+                        android:textColor="@drawable/button_text_dark"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/button_selector_dark"
+                        android:layout_alignWithParentIfMissing="false"
+                        android:layout_centerInParent="true" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="@string/auction_default_remainingbids"
+                        android:id="@+id/remainingBids"
+                        style="@style/RedAccent"
+                        android:maxLines="10"
+                        android:layout_centerInParent="true"
+                        android:textAlignment="center" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+            <View style="@style/Divider" />
+
+            <!-- Fourth Grid (Program bids)-->
             <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_width="match_parent"
+                android:layout_height="80dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="@string/auction_default_time"
-                    android:id="@+id/remainingTime"
-                    style="@style/RedAccentBold"
-                    android:layout_centerVertical="true"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
+                    android:text="@string/auction_bidprogram_text"
                     android:textAllCaps="true"
-                    android:layout_below="@id/remainingTime"
-                    android:text="@string/auction_remaining_time"
-                    android:layout_centerVertical="true"/>
-            </RelativeLayout>
+                    android:id="@+id/auction_bidprogram_text"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp" />
 
-        </LinearLayout>
-        <View style="@style/Divider" />
-
-        <!-- Third Grid (Button and Remaining Bids)-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal"
-            android:baselineAligned="false"
-            >
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/auction_bidprogram_text"
+                    android:id="@+id/auction_bidprogram_edit"
+                    android:hint="@string/auction_bidprogram_edit_hint"
+                    android:width="300dp"
+                    android:inputType="number"
+                    android:layout_toStartOf="@+id/auction_bidprogram_button"
+                    android:layout_marginLeft="10dp" />
 
                 <Button
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/auction_bidnow"
-                    android:textAllCaps="true"
-                    android:id="@+id/auction_bidnow"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/auction_bidprogram_button"
+                    android:text="@string/auction_bidbutton_accept"
                     android:textColor="@drawable/button_text_dark"
-                    android:layout_marginTop="6dp"
-                    android:background="@drawable/button_selector_dark"
-                    android:layout_alignWithParentIfMissing="false"
-                    android:layout_centerInParent="true" />
+                    android:textAllCaps="true"
+                    android:background="@drawable/button_selector_dark"/>
 
             </RelativeLayout>
+            <View style="@style/Divider" />
 
+            <!-- Fifth Grid (Buy Now)-->
             <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_width="match_parent"
+                android:layout_height="80dp">
 
-                <TextView
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:id="@+id/auction_buynow_button"
+                    android:background="@drawable/button_dark"
+                    android:text="@string/auction_buynowbutton_text"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@drawable/button_text_dark"
+                    android:textAllCaps="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+            <View style="@style/Divider" />
+
+            <!-- Sixth Grid (User Winning)-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp">
+
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="@string/auction_default_remainingbids"
-                    android:id="@+id/remainingBids"
+                    android:src="@drawable/profile"
+                    android:contentDescription="@string/auction_maxperformance_user_pic"
+                    android:id="@+id/imageView3"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/auction_maxperformance_user_text"
+                    android:id="@+id/textView"
+                    android:layout_alignParentTop="false"
+                    android:layout_toEndOf="@+id/imageView3"
+                    android:layout_centerVertical="true"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/auction_user_maxperformance"
+                    android:text="@string/auction_maxperformance_user_name"
+                    android:layout_below="@+id/textView"
                     style="@style/RedAccent"
-                    android:maxLines="10"
-                    android:layout_centerInParent="true"
+                    android:layout_toEndOf="@+id/imageView3"
                     android:textAlignment="center" />
 
             </RelativeLayout>
+            <View style="@style/Divider" />
+
+            <!-- Seventh Grid (Bids History)-->
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="0,1,2"
+                android:id="@+id/bidHistory"
+                android:layout_margin="10dp">
+
+            </TableLayout>
+            <View style="@style/Divider" />
+
+            <!-- Space at the end -->
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+
+            <WebView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/webView" />
+
+            <!-- Eighth Grid (HTML Product Description) -->
+
 
         </LinearLayout>
-        <View style="@style/Divider" />
 
-        <!-- Fourth Grid (Program bids)-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/auction_bidprogram_text"
-                android:textAllCaps="true"
-                android:id="@+id/auction_bidprogram_text"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/auction_bidprogram_text"
-                android:id="@+id/auction_bidprogram_edit"
-                android:hint="@string/auction_bidprogram_edit_hint"
-                android:width="300dp"
-                android:inputType="number"
-                android:layout_toStartOf="@+id/auction_bidprogram_button"
-                android:layout_marginLeft="10dp" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:id="@+id/auction_bidprogram_button"
-                android:text="@string/auction_bidbutton_accept"
-                android:textColor="@drawable/button_text_dark"
-                android:textAllCaps="true"
-                android:background="@drawable/button_selector_dark"/>
-
-        </RelativeLayout>
-        <View style="@style/Divider" />
-
-        <!-- Fifth Grid (Buy Now)-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp">
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:id="@+id/auction_buynow_button"
-                android:background="@drawable/button_dark"
-                android:text="@string/auction_buynowbutton_text"
-                android:layout_marginLeft="10dp"
-                android:textColor="@drawable/button_text_dark"
-                android:textAllCaps="true"
-                android:layout_marginRight="10dp"
-                android:layout_centerVertical="true"/>
-
-        </RelativeLayout>
-        <View style="@style/Divider" />
-
-        <!-- Sixth Grid (User Winning)-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/profile"
-                android:contentDescription="@string/auction_maxperformance_user_pic"
-                android:id="@+id/imageView3"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/auction_maxperformance_user_text"
-                android:id="@+id/textView"
-                android:layout_alignParentTop="false"
-                android:layout_toEndOf="@+id/imageView3"
-                android:layout_centerVertical="true"
-                android:textAlignment="center" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/auction_user_maxperformance"
-                android:text="@string/auction_maxperformance_user_name"
-                android:layout_below="@+id/textView"
-                style="@style/RedAccent"
-                android:layout_toEndOf="@+id/imageView3"
-                android:textAlignment="center" />
-
-        </RelativeLayout>
-        <View style="@style/Divider" />
-
-    </LinearLayout>
+    </ScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

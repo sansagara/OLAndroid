@@ -1,24 +1,35 @@
 package com.hecticus.ofertaloca.testapp;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import tools.AsyncResponseDetail;
 import tools.Auction;
+import tools.Bid;
 import tools.GetJSONDetailFromServer;
 import tools.SendBidToServer;
 import tools.SendJSONDataToServer;
@@ -153,6 +164,77 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
         String buyNowFinal = String.format(buyNowPrev, auction_detail.getMarket_price().toString());
         buyNow.setText(buyNowFinal);
 
+        //If bids is null..
+        List<Bid> bids;
+        if (auction_detail.getBids() == null) {
+            //Bid History Table
+            bids = new ArrayList<>();
+            for (int i = 0; i < 10; ++i) {
+                bids.add(new Bid("Nickname" + i+1, i+1000, i+2500));
+            }
+        } else {
+            bids = auction_detail.getBids();
+        }
+
+        //Method to create the bid history table.
+        createBidHistoryTable(bids);
+
+        //Create HTML Product Description detail.
+        WebView productHTMLDescription = (WebView) findViewById(R.id.webView);
+        productHTMLDescription.setWebViewClient(new WebViewClient());
+        productHTMLDescription.loadUrl("https://es.wikipedia.org/wiki/Moto_G");
+
+    }
+
+    private void createBidHistoryTable(List<Bid> bids) {
+
+        TableLayout tl = (TableLayout) findViewById(R.id.bidHistory);
+
+        TableRow htr = new TableRow(this);
+        TextView hnick = new TextView(this);
+        hnick.setText("Nick");
+        hnick.setTypeface(null, Typeface.BOLD);
+        hnick.setGravity(Gravity.CENTER);
+        htr.addView(hnick);
+
+        TextView hacum = new TextView(this);
+        hacum.setText("Accum");
+        hacum.setTypeface(null, Typeface.BOLD);
+        hacum.setGravity(Gravity.CENTER);
+        htr.addView(hacum);
+
+        TextView hval = new TextView(this);
+        hval.setText("Val");
+        hval.setTypeface(null, Typeface.BOLD);
+        hval.setGravity(Gravity.CENTER);
+        htr.addView(hval);
+
+        tl.addView(htr);
+
+        int i=0;
+        DecimalFormat df = new DecimalFormat("#.#");
+        df.setRoundingMode(RoundingMode.CEILING);
+
+        for (Bid bid : bids) {
+            TableRow tr = new TableRow(this);
+            if (i%2 == 0) {
+                tr.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.gray));
+            }
+            TextView nick = new TextView(this);
+            nick.setText(bid.getClient());
+            tr.addView(nick);
+
+            TextView acum = new TextView(this);
+            acum.setText( df.format( bid.getAccumulated() ) );
+            tr.addView(acum);
+
+            TextView val = new TextView(this);
+            val.setText( df.format( bid.getValue() ) );
+            tr.addView(val);
+
+            tl.addView(tr);
+            i++;
+        }
 
     }
 
