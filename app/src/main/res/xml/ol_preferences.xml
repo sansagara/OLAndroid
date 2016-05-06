@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/prefs_user_category">
+
+        <EditTextPreference
+            android:key="@string/prefs_userid_key"
+            android:summary="@string/prefs_userid_summ"
+            android:title="@string/prefs_userid_tittle">
+
+        </EditTextPreference>
+
+        <EditTextPreference
+            android:key="@string/prefs_nickname_key"
+            android:summary="@string/prefs_nickname_summ"
+            android:title="@string/prefs_nickname_tittle">
+
+        </EditTextPreference>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/prefs_payment_category">
+
+        <EditTextPreference
+            android:key="credit_card_number"
+            android:summary="Set the credit card to buy bids"
+            android:title="User ID">
+
+        </EditTextPreference>
+
+        <EditTextPreference
+            android:key="paypal_account"
+            android:summary="Set the paypal account to buy bids"
+            android:title="Paypal">
+
+        </EditTextPreference>
+    </PreferenceCategory>
+
+</PreferenceScreen>

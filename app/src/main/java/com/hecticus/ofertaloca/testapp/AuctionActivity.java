@@ -1,8 +1,10 @@
 package com.hecticus.ofertaloca.testapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -32,7 +35,6 @@ import tools.Auction;
 import tools.Bid;
 import tools.GetJSONDetailFromServer;
 import tools.SendBidToServer;
-import tools.SendJSONDataToServer;
 
 public class AuctionActivity extends AppCompatActivity implements AsyncResponseDetail {
 
@@ -41,10 +43,19 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auction);
 
+        //Avoid keyboard popping up!.
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
         //Get extra (auction_id and product_name) params via intent.
         Bundle extras = getIntent().getExtras();
         final int auction_id = extras.getInt("auction_id");
         final String product_name = extras.getString("product_name");
+
+        //Get Client info from Shared Prefs.
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(AuctionActivity.this);
+        final int userID = Integer.parseInt( prefs.getString(getString(R.string.prefs_userid_key), null) );
+        final String nickName = prefs.getString(getString(R.string.prefs_nickname_key), null);
+        Toast.makeText(getApplicationContext(), "userID: " + userID + " nickName: " + nickName, Toast.LENGTH_LONG).show();
 
         //Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -55,7 +66,8 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
         TextView auctionProductName = (TextView) findViewById(R.id.auctionProductName);
         Button bidNowButton = (Button) findViewById(R.id.auction_bidnow);
         Button bidProgramButton = (Button) findViewById(R.id.auction_bidprogram_button);
-        Button buyNowButton = (Button) findViewById(R.id.auction_buynow_button);
+        Button buyNow = (Button) findViewById(R.id.auction_buynow_button);
+        TextView currentPrice = (TextView) findViewById(R.id.currentPrice);
 
         //Set the Name immediately.
         auctionProductName.setText(product_name);
@@ -68,7 +80,7 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
 
             @Override
             public void onClick(View v) {
-                SendBid(1, 1, 0, false, product_name);
+                SendBid(1, userID, 0, false, product_name);
 
 
             }
@@ -81,12 +93,12 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
             public void onClick(View v) {
                 final EditText bidsToSchedule = (EditText) findViewById(R.id.auction_bidprogram_edit);
                 int bidQuant = Integer.parseInt(bidsToSchedule.getText().toString());
-                SendBid(1, 1, bidQuant, false, product_name);
+                SendBid(1, userID, bidQuant, false, product_name);
             }
         });
 
         //Button Handler for Buy Now
-        buyNowButton.setOnClickListener( new View.OnClickListener() {
+        buyNow.setOnClickListener( new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -94,6 +106,20 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
                 //TODO: Call WS for Buy Now (No WS yet)
             }
         });
+
+        //Format Remaining Bids with Default Bid.
+        TextView remainingBids = (TextView) findViewById(R.id.remainingBids);
+        String remainingBidsPrev = getResources().getString(R.string.auction_default_remainingbids);
+        //TODO: Replace this hardcoded 10 with the remaining bids the user haves.
+        String remainingBidsFinal = String.format(remainingBidsPrev, 10);
+        remainingBids.setText(remainingBidsFinal);
+
+        //Format Current price and buy now..
+
+        currentPrice.setText("0.0");
+        String buyNowPrev = getResources().getString(R.string.auction_buynowbutton_text);
+        String buyNowFinal = String.format(buyNowPrev, 0.0 );
+        buyNow.setText(buyNowFinal);
 
 
         //Make Async call to Detail WS.
@@ -118,6 +144,11 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
 
     @Override  //this override the implemented method from asyncTask
     public void processFinish(Auction auction_detail) {
+
+        //Decimal formatting (2 digits)
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.CEILING);
+
         //TODO: Do all this stuff below only if auction is on active status.
         final Auction fauction_detail = auction_detail;
         TextView currentPrice = (TextView) findViewById(R.id.currentPrice);
@@ -127,7 +158,6 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
 
         //Current price and remaining time.
         currentPrice.setText(auction_detail.getLast_bid().toString());
-
 
         //Handler for timer.
         final Handler mHandler = new Handler();
@@ -161,7 +191,7 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
 
         //Buy now button
         String buyNowPrev = getResources().getString(R.string.auction_buynowbutton_text);
-        String buyNowFinal = String.format(buyNowPrev, auction_detail.getMarket_price().toString());
+        String buyNowFinal = String.format(buyNowPrev, df.format( auction_detail.getMarket_price() ) );
         buyNow.setText(buyNowFinal);
 
         //If bids is null..
@@ -254,9 +284,9 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Toast.makeText(getApplicationContext(), getString(R.string.toast_biddingnow) + productName, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.toast_biddingnow) + productName + " for clientID: " + ClientID, Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(getApplicationContext(), getString(R.string.toast_biddingscheduled) + productName, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.toast_biddingscheduled) + productName + " for clientID: " + ClientID, Toast.LENGTH_LONG).show();
         }
         //call to async class
         new SendBidToServer(getApplicationContext(), isScheduled, AuctionID, ClientID ).execute(String.valueOf(bidDataJSON));

@@ -37,4 +37,9 @@
     <string name="auction_maxperformance_user_name">Luisa Lane</string>
     <string name="toast_biddingnow">Ofertando por </string>
     <string name="toast_biddingscheduled">Programando oferta por </string>
+    <string name="prefs_user_category">Detalles de Usuario</string>
+    <string name="prefs_userid_summ">The UserID to test bids with.</string>
+    <string name="prefs_userid_tittle">User ID</string>
+    <string name="prefs_nickname_summ">The nickname to send tests bids with.</string>
+    <string name="prefs_nickname_tittle">User nickname</string>
 </resources>

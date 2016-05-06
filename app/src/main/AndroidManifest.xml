@@ -57,6 +57,9 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_megapop"
             android:theme="@style/MyMaterialTheme" />
+
+        <activity android:name=".PreferencesActivity"
+            android:theme="@style/MyMaterialTheme" />
     </application>
 
 </manifest>
