@@ -42,4 +42,5 @@
     <string name="prefs_userid_tittle">User ID</string>
     <string name="prefs_nickname_summ">The nickname to send tests bids with.</string>
     <string name="prefs_nickname_tittle">User nickname</string>
+    <string name="toast_coming_soon">Pronto...</string>
 </resources>

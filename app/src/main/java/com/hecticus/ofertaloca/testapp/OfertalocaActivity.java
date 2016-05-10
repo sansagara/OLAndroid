@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,8 +109,15 @@ public class OfertalocaActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             startActivity(new Intent(OfertalocaActivity.this, PreferencesActivity.class));
             return true;
+        } else if (id == R.id.action_search) {
+            Toast.makeText(getApplicationContext(), getString(R.string.toast_coming_soon), Toast.LENGTH_LONG);
+            //handleMenuSearch();
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
+
 }

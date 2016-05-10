@@ -53,6 +53,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 Intent myIntent = new Intent(HomeActivity.this, OfertalocaActivity.class);
                 HomeActivity.this.startActivity(myIntent);
+                finish();
 
             }
         });

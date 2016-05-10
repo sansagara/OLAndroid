@@ -28,6 +28,8 @@
     <string name="toast_creating_account">Creating Account...</string>
     <string name="toast_biddingnow">Bidding now for </string>
     <string name="toast_biddingscheduled">Scheduling bids for </string>
+    <string name="toast_coming_soon">Coming soon...</string>
+
 
     <!-- Unit Api Connector Routes -->
     <string name="unit_server_route" translatable="false">http://10.0.3.125:9000</string>
