@@ -77,5 +77,7 @@
     <string name="prefs_nickname_key">nickname</string>
     <string name="prefs_nickname_summ">The nickname to send tests bids with.</string>
     <string name="prefs_nickname_tittle">User nickname</string>
+    <string name="search_settings">Search</string>
+    <string name="user_settings">User</string>
 
 </resources>

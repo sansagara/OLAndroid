@@ -15,7 +15,7 @@
     <string name="facebook_login">Entrar con Facebook</string>
     <string name="login_create_account">Crea tu Cuenta</string>
     <string name="toast_password_mismatch">Las contraseñas no coinciden!</string>
-    <string name="toast_creating_account">Creando tu cuenta...</string>
+    <string name="toast_creating_account">Creando tu cuenta…</string>
     <string name="tab2">Abiertas</string>
     <string name="tab3">Próximas</string>
     <string name="tab4">Ganadores</string>
@@ -42,5 +42,7 @@
     <string name="prefs_userid_tittle">User ID</string>
     <string name="prefs_nickname_summ">The nickname to send tests bids with.</string>
     <string name="prefs_nickname_tittle">User nickname</string>
-    <string name="toast_coming_soon">Pronto...</string>
+    <string name="toast_coming_soon">Pronto…</string>
+    <string name="search_settings">Buscar</string>
+    <string name="user_settings">Perfil</string>
 </resources>

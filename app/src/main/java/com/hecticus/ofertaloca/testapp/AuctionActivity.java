@@ -53,8 +53,8 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
 
         //Get Client info from Shared Prefs.
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(AuctionActivity.this);
-        final int userID = Integer.parseInt( prefs.getString(getString(R.string.prefs_userid_key), null) );
-        final String nickName = prefs.getString(getString(R.string.prefs_nickname_key), null);
+        final int userID = Integer.parseInt( prefs.getString(getString(R.string.prefs_userid_key), "0") );
+        final String nickName = prefs.getString(getString(R.string.prefs_nickname_key), "0");
         Toast.makeText(getApplicationContext(), "userID: " + userID + " nickName: " + nickName, Toast.LENGTH_LONG).show();
 
         //Toolbar

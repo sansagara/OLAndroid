@@ -1,9 +1,11 @@
 package com.hecticus.ofertaloca.testapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -32,6 +34,18 @@ public class OfertalocaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Get Client info from Shared Prefs.
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OfertalocaActivity.this);
+        final int userID = Integer.parseInt( prefs.getString(getString(R.string.prefs_userid_key), "0") );
+        if (userID == 0) {
+            //If no userID stored, get the client to the home screen so they can signin/signup.
+            Intent myIntent = new Intent(OfertalocaActivity.this, HomeActivity.class);
+            OfertalocaActivity.this.startActivity(myIntent);
+            finish();
+        }
+
+        //Fill layout
         setContentView(R.layout.activity_ofertaloca);
 
         //Toolbar
