@@ -1,8 +1,6 @@
 package tools;
 
-import android.app.Activity;
 import android.content.Context;
-
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.widget.CardView;
@@ -13,12 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hecticus.ofertaloca.testapp.AuctionActivity;
-import com.hecticus.ofertaloca.testapp.OfertalocaActivity;
 import com.hecticus.ofertaloca.testapp.R;
-import com.hecticus.ofertaloca.testapp.SignupActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,6 +143,7 @@ public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
             int nCounter = auction.getRemainingTime();
 
             public void run() {
+                if (nCounter > 60) nCounter = 60;
                 nCounter--;
                 timeRemaining.setText("00:00:" + String.format("%02d", nCounter));
 

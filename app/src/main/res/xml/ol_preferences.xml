@@ -4,12 +4,12 @@
     <PreferenceCategory
         android:title="@string/prefs_user_category">
 
-        <EditTextPreference
-            android:key="@string/prefs_userid_key"
-            android:summary="@string/prefs_userid_summ"
-            android:title="@string/prefs_userid_tittle">
+        <!--<EditTextPreference-->
+            <!--android:key="@string/prefs_userid_key"-->
+            <!--android:summary="@string/prefs_userid_summ"-->
+            <!--android:title="@string/prefs_userid_tittle">-->
 
-        </EditTextPreference>
+        <!--</EditTextPreference>-->
 
         <EditTextPreference
             android:key="@string/prefs_nickname_key"
@@ -25,7 +25,7 @@
         <EditTextPreference
             android:key="credit_card_number"
             android:summary="Set the credit card to buy bids"
-            android:title="User ID">
+            android:title="Credit Card">
 
         </EditTextPreference>
 
@@ -35,6 +35,18 @@
             android:title="Paypal">
 
         </EditTextPreference>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/prefs_push_category">
+
+        <EditTextPreference
+            android:key="@string/prefs_registration_id_key"
+            android:summary="@string/prefs_registration_id_summ"
+            android:title="RegID">
+
+        </EditTextPreference>
+
     </PreferenceCategory>
 
 </PreferenceScreen>

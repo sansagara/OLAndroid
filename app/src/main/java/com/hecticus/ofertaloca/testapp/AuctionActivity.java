@@ -3,11 +3,11 @@ package com.hecticus.ofertaloca.testapp;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -53,9 +53,10 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
 
         //Get Client info from Shared Prefs.
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(AuctionActivity.this);
-        final int userID = Integer.parseInt( prefs.getString(getString(R.string.prefs_userid_key), "0") );
+        final int userID = prefs.getInt(getString(R.string.prefs_userid_key), 0);
         final String nickName = prefs.getString(getString(R.string.prefs_nickname_key), "0");
-        Toast.makeText(getApplicationContext(), "userID: " + userID + " nickName: " + nickName, Toast.LENGTH_LONG).show();
+        final String regID = prefs.getString(getString(R.string.prefs_registration_id_key), "");
+        Toast.makeText(getApplicationContext(), "userID: " + userID + " nickName: " + nickName + " regID: " + regID, Toast.LENGTH_LONG).show();
 
         //Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

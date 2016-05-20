@@ -45,4 +45,10 @@
     <string name="toast_coming_soon">Pronto…</string>
     <string name="search_settings">Buscar</string>
     <string name="user_settings">Perfil</string>
+    <string name="hello_blank_fragment">Hola fragmento blanco</string>
+    <string name="prefs_app_version_summ">Version del App</string>
+    <string name="prefs_payment_category">Detalle de Pagos</string>
+    <string name="prefs_push_category">Notificaciones PUSH</string>
+    <string name="prefs_registration_id_summ">ID de registro para enviar PUSH</string>
+    <string name="toast_taking_to_login">Pronto…</string>
 </resources>

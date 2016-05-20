@@ -1,9 +1,11 @@
 package com.hecticus.ofertaloca.testapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +21,7 @@ import com.facebook.LoggingBehavior;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -49,8 +52,8 @@ public class SignupActivity extends AppCompatActivity {
                     public void onSuccess(LoginResult loginResult) {
                         String fbToken = loginResult.getAccessToken().getToken().toString();
                         String fbUserId = loginResult.getAccessToken().getUserId().toString();
-                        Log.e("Facebook: ", "FBToken" + fbToken);
-                        Log.e("Facebook: ", "FBUserId" + fbUserId);
+                        Log.i("Facebook: ", "FBToken" + fbToken);
+                        Log.i("Facebook: ", "FBUserId" + fbUserId);
                         Toast.makeText(getApplicationContext(), "Facebook UserId:" + fbUserId, Toast.LENGTH_LONG).show();
 
                         //Call the Create Method for Facebook SignUp.
@@ -139,14 +142,30 @@ public class SignupActivity extends AppCompatActivity {
      * @param isFacebookLogin if the create is with facebook (true) or with email (false).
      */
     public void CreateClient(String login, String email, String password, String facebookId, Boolean isFacebookLogin) {
+
+        //GET the registration_id from SharedPreferences.
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SignupActivity.this);
+        final String regID = prefs.getString(getString(R.string.prefs_registration_id_key), "");
+
+        //Build correct JSON to send to Reg API
         JSONObject createUserJSON = new JSONObject();
+        JSONObject device = new JSONObject();
+        JSONArray devices = new JSONArray();
         try {
-            createUserJSON.put("login" , login);
-            createUserJSON.put("email", email);
+
+            //put device nodes.
+            device.put("device_id", 1);
+            device.put("registration_id", regID);
+            //put "device" object into "devices" array.
+            devices.put(device);
+            //put first-level nodes. login is nickname on db. login is email on db.
+            createUserJSON.put("nickname" , login);
+            createUserJSON.put("login", email);
             createUserJSON.put("password", password);
             createUserJSON.put("facebookId", facebookId);
             createUserJSON.put("country", 3);
             createUserJSON.put("language", 405);
+            createUserJSON.put("devices", devices);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -155,6 +174,7 @@ public class SignupActivity extends AppCompatActivity {
         //If the JSON is actually filled.
         if (createUserJSON.length() > 0) {
             Toast.makeText(getApplicationContext(), getString(R.string.toast_creating_account), Toast.LENGTH_LONG).show();
+            Log.i("JSON", "POST body:  " + createUserJSON );
             //call to async class
             new SendJSONDataToServer(getApplicationContext(), isFacebookLogin).execute(String.valueOf(createUserJSON));
         }

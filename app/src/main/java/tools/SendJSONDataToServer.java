@@ -2,12 +2,17 @@ package tools;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.hecticus.ofertaloca.testapp.OfertalocaActivity;
 import com.hecticus.ofertaloca.testapp.R;
-import com.hecticus.ofertaloca.testapp.SMSubscribeActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -62,7 +67,7 @@ public class SendJSONDataToServer extends AsyncTask<String,String,String> {
 
             // is output buffer writer
             urlConnection.setRequestMethod("POST");
-            urlConnection.setRequestProperty("Host", "myhost.com");
+            //urlConnection.setRequestProperty("Host", "myhost.com");
             //urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; PPC; en-US; rv:1.3.1)");
             urlConnection.setRequestProperty("Content-Type", "application/json");
             urlConnection.setRequestProperty("Accept", "application/json");
@@ -127,16 +132,46 @@ public class SendJSONDataToServer extends AsyncTask<String,String,String> {
 
 
     @Override
-    protected void onPostExecute(String JSONResponse) {
-        if (JSONResponse != null) {
-            Toast.makeText(context, "Post Executed: " + JSONResponse, Toast.LENGTH_LONG).show();
-            //Call Next Activity
-            Intent intent = new Intent(context.getApplicationContext(), SMSubscribeActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
+    protected void onPostExecute(String Response) {
+        if (Response != null) {
+            //Toast.makeText(context, "Post Executed: " + Response, Toast.LENGTH_LONG).show();
+            Log.i("JSON","Post Executed: " + Response );
+
+            //Parse response to get its values (and check for userID).
+
+            JSONObject JSONCompResponse = null;
+            JSONObject JSONResponse = null;
+            try {
+                JSONCompResponse = new JSONObject(Response);
+                JSONResponse = JSONCompResponse.getJSONObject("response");
+
+                //Si el mensaje original tiene error = 0
+                if (JSONCompResponse.getInt("error") == 0) {
+                    //Get the userID
+                    int userID = JSONResponse.getInt("id_client");
+                    String nickname = JSONResponse.getString("nickname");
+
+                    //Save to Shared Preferences
+                    final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+                    Log.i("SP", "Saving userID " + userID);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putInt(context.getString(R.string.prefs_userid_key), userID);
+                    editor.putString(context.getString(R.string.prefs_nickname_key), nickname);
+                    editor.apply();
+
+                    //Call Next Activity
+                    Intent intent = new Intent(context.getApplicationContext(), OfertalocaActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+
+            } catch (JSONException e) {
+                Log.e("JSON","Exception parsing response: " + e );
+            }
+
         } else {
             Toast.makeText(context, "Something gone wrong. Null result!", Toast.LENGTH_LONG).show();
         }
     } // End onPostExecute method
 
-} // End SendJSONDataToServer class
+} // End SendJSONDataToServer class.

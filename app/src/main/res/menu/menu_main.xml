@@ -18,4 +18,5 @@
         android:orderInCategory="300"
         android:title="@string/user_settings"
         android:icon="@android:drawable/ic_menu_info_details"/>
+
 </menu>
