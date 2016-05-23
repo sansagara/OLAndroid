@@ -38,10 +38,10 @@
     <string name="toast_biddingnow">Ofertando por </string>
     <string name="toast_biddingscheduled">Programando oferta por </string>
     <string name="prefs_user_category">Detalles de Usuario</string>
-    <string name="prefs_userid_summ">The UserID to test bids with.</string>
+    <string name="prefs_userid_summ">El UserID para probar las subastas.</string>
     <string name="prefs_userid_tittle">User ID</string>
     <string name="prefs_nickname_summ">The nickname to send tests bids with.</string>
-    <string name="prefs_nickname_tittle">User nickname</string>
+    <string name="prefs_nickname_tittle">Sobrenombre</string>
     <string name="toast_coming_soon">Pronto…</string>
     <string name="search_settings">Buscar</string>
     <string name="user_settings">Perfil</string>
@@ -51,4 +51,10 @@
     <string name="prefs_push_category">Notificaciones PUSH</string>
     <string name="prefs_registration_id_summ">ID de registro para enviar PUSH</string>
     <string name="toast_taking_to_login">Pronto…</string>
+    <string name="search_hint">Buscar Subastas</string>
+    <string name="push_new_auction">Nueva Subasta!</string>
+    <string name="toast_error_rest">Error en servicio REST.</string>
+    <string name="toast_empty_response">Error: Respuesta vacía.</string>
+    <string name="toast_user_exists">A user already exists with that username.</string>
+    <string name="toast_empty_stream">Error: Flujo de respuesta vacío.</string>
 </resources>

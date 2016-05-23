@@ -32,6 +32,10 @@
     <string name="toast_biddingscheduled">Scheduling bids for </string>
     <string name="toast_coming_soon">Coming soon…</string>
     <string name="toast_taking_to_login">Coming soon…</string>
+    <string name="toast_error_rest">Error in Rest Service</string>
+    <string name="toast_empty_stream">Error: Empty stream response</string>
+    <string name="toast_empty_response">Error: Empty response.</string>
+    <string name="toast_user_exists">A user already exists with that username.</string>
 
 
     <!-- Unit Api Connector Routes -->
@@ -91,5 +95,7 @@
 
     <string name="search_settings">Search</string>
     <string name="user_settings">User</string>
+    <string name="search_hint">Search Auctions</string>
+    <string name="push_new_auction">New Auction!</string>
 
 </resources>

@@ -84,7 +84,7 @@ public class SendJSONDataToServer extends AsyncTask<String,String,String> {
             //input stream
             StringBuffer buffer = new StringBuffer();
             if (inputStream == null) {
-                Toast.makeText(context, "Error connecting to REST Service", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, context.getString(R.string.toast_error_rest), Toast.LENGTH_LONG).show();
                 return null;
             }
 
@@ -95,14 +95,14 @@ public class SendJSONDataToServer extends AsyncTask<String,String,String> {
                 buffer.append(inputLine + "\n");
             if (buffer.length() == 0) {
                 // Stream was empty. No point in parsing.
-                Toast.makeText(context, "Empty Stream", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, context.getString(R.string.toast_empty_stream), Toast.LENGTH_LONG).show();
                 return null;
             }
             JsonResponse = buffer.toString();
 
             if (JsonResponse.isEmpty()) {
                 // JsonResponse was empty. No point in parsing.
-                Toast.makeText(context, "Empty Response", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, context.getString(R.string.toast_empty_response), Toast.LENGTH_LONG).show();
                 return null;
             }
             //response data!.
@@ -145,7 +145,7 @@ public class SendJSONDataToServer extends AsyncTask<String,String,String> {
                 JSONCompResponse = new JSONObject(Response);
                 JSONResponse = JSONCompResponse.getJSONObject("response");
 
-                //Si el mensaje original tiene error = 0
+                //If the response haves error = 0 means everything is OK.
                 if (JSONCompResponse.getInt("error") == 0) {
                     //Get the userID
                     int userID = JSONResponse.getInt("id_client");
@@ -163,6 +163,8 @@ public class SendJSONDataToServer extends AsyncTask<String,String,String> {
                     Intent intent = new Intent(context.getApplicationContext(), OfertalocaActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
+                } else if (JSONCompResponse.getInt("error") == 1) {
+                    Toast.makeText(context, context.getString(R.string.toast_user_exists), Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {

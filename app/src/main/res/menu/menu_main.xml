@@ -10,9 +10,12 @@
     <item
         android:id="@+id/action_search"
         android:orderInCategory="200"
+        app:actionViewClass="android.support.v7.widget.SearchView"
         android:title="@string/search_settings"
-        app:showAsAction="ifRoom"
-        android:icon="@android:drawable/ic_menu_search"/>
+        app:showAsAction="ifRoom|collapseActionView"
+        android:icon="@android:drawable/ic_menu_search" />
+
+        />
     <item
         android:id="@+id/action_user"
         android:orderInCategory="300"

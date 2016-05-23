@@ -53,4 +53,9 @@
         <item name="android:windowBackground">@drawable/splash</item>
     </style>
 
+    <style name="SearchViewTheme" >
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/lightBlue</item>
+    </style>
+
 </resources>
