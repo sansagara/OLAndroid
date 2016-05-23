@@ -97,5 +97,10 @@
     <string name="user_settings">User</string>
     <string name="search_hint">Search Auctions</string>
     <string name="push_new_auction">New Auction!</string>
+    <string name="login_enter">Enter</string>
+    <string name="login_username_or_email_hint">username or e-mail</string>
+    <string name="login_password_hint">password</string>
+    <string name="toast_logging_in">Logging you in</string>
+    <string name="toast_user_exists_but_logged">You already have an account. Logging in.</string>
 
 </resources>

@@ -55,6 +55,11 @@
     <string name="push_new_auction">Nueva Subasta!</string>
     <string name="toast_error_rest">Error en servicio REST.</string>
     <string name="toast_empty_response">Error: Respuesta vacía.</string>
-    <string name="toast_user_exists">A user already exists with that username.</string>
+    <string name="toast_user_exists">!Un usuario ya existe con ese nombre!.</string>
     <string name="toast_empty_stream">Error: Flujo de respuesta vacío.</string>
+    <string name="login_enter">Enter</string>
+    <string name="login_username_or_email_hint">usuario o correo electrónico</string>
+    <string name="login_password_hint">Clave</string>
+    <string name="toast_logging_in">Logging you in</string>
+    <string name="toast_user_exists_but_logged">You already have an account. Logging in.</string>
 </resources>

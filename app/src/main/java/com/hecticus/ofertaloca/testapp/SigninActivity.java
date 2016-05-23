@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -28,7 +27,7 @@ import org.json.JSONObject;
 
 import tools.SendJSONDataToServer;
 
-public class SignupActivity extends AppCompatActivity {
+public class SigninActivity extends AppCompatActivity {
     CallbackManager callbackManager;
 
     @Override
@@ -47,7 +46,7 @@ public class SignupActivity extends AppCompatActivity {
             FacebookSdk.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
         }
 
-        setContentView(R.layout.activity_signup);
+        setContentView(R.layout.activity_signin);
 
 
         //Start Facebook Callback
@@ -64,7 +63,7 @@ public class SignupActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Facebook UserId:" + fbUserId, Toast.LENGTH_LONG).show();
 
                         //Call the Create Method for Facebook SignUp.
-                        CreateClient("", "", "", fbUserId, true );
+                        CreateClient("", "", fbUserId, true );
 
                     }
 
@@ -82,26 +81,14 @@ public class SignupActivity extends AppCompatActivity {
 
         //Set Typeface
         Typeface typeFace = Typeface.createFromAsset(getAssets(),"Futura-Book.ttf");
-        //Get TextViews
-        TextView TextView1 = (TextView)findViewById(R.id.login_header_text);
-        TextView TextView2 = (TextView)findViewById(R.id.login_header_text2);
-        TextView TextView3 = (TextView)findViewById(R.id.login_header_text_iphone);
-        TextView TextView4 = (TextView)findViewById(R.id.login_header_text_iphone_desc);
         //Get InputTexts
         final EditText InputText1 = (EditText) findViewById(R.id.username);
-        final EditText InputText2 = (EditText) findViewById(R.id.email);
         final EditText InputText3 = (EditText) findViewById(R.id.password);
-        final EditText InputText4 = (EditText) findViewById(R.id.confirmpassword);
 
         //Set Font
-        TextView1.setTypeface(typeFace);
-        TextView2.setTypeface(typeFace);
-        TextView3.setTypeface(typeFace);
-        TextView4.setTypeface(typeFace);
         InputText1.setTypeface(typeFace);
-        InputText2.setTypeface(typeFace);
         InputText3.setTypeface(typeFace);
-        InputText4.setTypeface(typeFace);
+
 
         final Button createAccountButton = (Button) findViewById(R.id.create_account);
         createAccountButton.setOnClickListener( new View.OnClickListener() {
@@ -111,18 +98,10 @@ public class SignupActivity extends AppCompatActivity {
                 //createAccountButton.setEnabled(false);
                 //function in the activity that corresponds to the layout button
                 String login = InputText1.getText().toString();
-                String email = InputText2.getText().toString();
                 String password = InputText3.getText().toString();
-                String confirmpassword = InputText4.getText().toString();
-                //Check passwords are the same!
-                if ((confirmpassword == null) || !password.equals(confirmpassword)) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.toast_password_mismatch), Toast.LENGTH_LONG).show();
-                    //createAccountButton.setEnabled(true);
-                    return;
-                }
 
                 //Call the Create Method for Email SignUp.
-                CreateClient(login, email, password, null, false );
+                CreateClient(login, password, null, false);
 
             } //End OnClick
         }); // End ClickListener
@@ -142,16 +121,15 @@ public class SignupActivity extends AppCompatActivity {
 
     /**
      * Create the client with a call to AsyncTask
-     * @param login the user login
-     * @param email the user email
+     * @param login the user login/email.
      * @param password the user (confirmed) password
      * @param facebookId the user facebookid
      * @param isFacebookLogin if the create is with facebook (true) or with email (false).
      */
-    public void CreateClient(String login, String email, String password, String facebookId, Boolean isFacebookLogin) {
+    public void CreateClient(String login, String password, String facebookId, Boolean isFacebookLogin) {
 
         //GET the registration_id from SharedPreferences.
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SignupActivity.this);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SigninActivity.this);
         final String regID = prefs.getString(getString(R.string.prefs_registration_id_key), "");
 
         //Build correct JSON to send to Reg API
@@ -167,7 +145,6 @@ public class SignupActivity extends AppCompatActivity {
             devices.put(device);
             //put first-level nodes. login is nickname on db. login is email on db.
             createUserJSON.put("nickname" , login);
-            createUserJSON.put("login", email);
             createUserJSON.put("password", password);
             createUserJSON.put("facebookId", facebookId);
             createUserJSON.put("country", 3);
@@ -180,7 +157,7 @@ public class SignupActivity extends AppCompatActivity {
 
         //If the JSON is actually filled.
         if (createUserJSON.length() > 0) {
-            Toast.makeText(getApplicationContext(), getString(R.string.toast_creating_account), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.toast_logging_in), Toast.LENGTH_LONG).show();
             Log.i("JSON", "POST body:  " + createUserJSON );
             //call to async class
             new SendJSONDataToServer(getApplicationContext(), isFacebookLogin).execute(String.valueOf(createUserJSON));

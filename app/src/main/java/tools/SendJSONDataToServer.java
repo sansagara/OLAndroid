@@ -146,7 +146,7 @@ public class SendJSONDataToServer extends AsyncTask<String,String,String> {
                 JSONResponse = JSONCompResponse.getJSONObject("response");
 
                 //If the response haves error = 0 means everything is OK.
-                if (JSONCompResponse.getInt("error") == 0) {
+                if (JSONCompResponse.getInt("error") == 0 || JSONCompResponse.getInt("error") == 1) {
                     //Get the userID
                     int userID = JSONResponse.getInt("id_client");
                     String nickname = JSONResponse.getString("nickname");
@@ -159,12 +159,19 @@ public class SendJSONDataToServer extends AsyncTask<String,String,String> {
                     editor.putString(context.getString(R.string.prefs_nickname_key), nickname);
                     editor.apply();
 
+                    //Handle special case when user already logged in. (Just send a toast)
+                    Toast.makeText(context, context.getString(R.string.toast_user_exists_but_logged), Toast.LENGTH_SHORT).show();
+
                     //Call Next Activity
                     Intent intent = new Intent(context.getApplicationContext(), OfertalocaActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
-                } else if (JSONCompResponse.getInt("error") == 1) {
-                    Toast.makeText(context, context.getString(R.string.toast_user_exists), Toast.LENGTH_LONG).show();
+
+
+                } else if (JSONCompResponse.getInt("error") == 2) {
+                    //User exists!! (But password don't match)
+                    Toast.makeText(context, context.getString(R.string.toast_user_exists), Toast.LENGTH_SHORT).show();
+
                 }
 
             } catch (JSONException e) {
