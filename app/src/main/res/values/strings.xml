@@ -103,4 +103,7 @@
     <string name="toast_logging_in">Logging you in</string>
     <string name="toast_user_exists_but_logged">You already have an account. Logging in.</string>
 
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
 </resources>

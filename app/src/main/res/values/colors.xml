@@ -17,4 +17,5 @@
     <color name="priceBoxBackground">#e5ebf6</color>
     <color name="priceBoxPrice">#b31f24</color>
     <color name="black">#000000</color>
+    <color name="White">#FFFFFF</color>
 </resources>

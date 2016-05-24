@@ -107,6 +107,7 @@ public class GetJSONDetailFromServer extends AsyncTask<String,String,String> {
                 String product_description = auction_data.getString("product_description");
                 double product_market_price = auction_data.getDouble("market_price");
                 String product_image_url = auction_data.getJSONArray("product_images").getJSONObject(0).getString("url");
+                String product_description_url = auction_data.getString("path_description");
 
                 //Auction attributes.
                 int id = auction_data.getInt("id_auction");
@@ -126,7 +127,7 @@ public class GetJSONDetailFromServer extends AsyncTask<String,String,String> {
                 }
 
                 //Create Auction (and Product) objects.
-                Auction auction_detail = new Auction(product_name, product_description, product_market_price, product_image_url, id, status, remaining_time, accumulated_price, bids_list);
+                Auction auction_detail = new Auction(product_name, product_description, product_market_price, product_image_url, id, status, remaining_time, accumulated_price, bids_list, product_description_url);
 
                 //Return the Auction Detail.
                 delegate.processFinish(auction_detail);

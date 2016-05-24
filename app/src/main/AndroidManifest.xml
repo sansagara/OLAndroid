@@ -46,6 +46,12 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
 
+        <!-- Signin Activity -->
+        <activity
+            android:name=".SigninActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+
         <!-- Main Activity (TODO) -->
 
 

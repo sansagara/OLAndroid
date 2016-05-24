@@ -15,6 +15,7 @@ public class Auction extends Product {
     protected double accumulated_price;
     protected double last_bid;
     protected List<Bid> bids;
+    protected String description_path;
 
     //Default Const
     public Auction(String product_name, String product_description ) {
@@ -52,6 +53,22 @@ public class Auction extends Product {
 
     }
 
+    //Constructor including Product data, bids list and product_description_url
+    public Auction(String product_name, String product_description, double product_market_price, String product_image_url, int auction_id, int auction_status, int auction_remaining_time, double auction_accumulated_price, List<Bid> bids_list, String description_path) {
+
+        //Create Product.
+        super(product_name, product_description, product_market_price, product_image_url);
+        //Create Auction_specific attributes.
+        this.id = auction_id;
+        this.status = auction_status;
+        this.remaining_time = auction_remaining_time;
+        this.accumulated_price = auction_accumulated_price;
+        this.bids = bids_list;
+        this.description_path = description_path;
+
+    }
+
+
     public int getID() {
         return id;
     }
@@ -69,5 +86,8 @@ public class Auction extends Product {
     }
     public List<Bid> getBids() {
         return bids;
+    }
+    public String getDescriptionPath() {
+        return description_path;
     }
 }

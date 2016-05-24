@@ -122,17 +122,28 @@ public class GetJSONDataFromServer extends AsyncTask<String,String,String> {
                 for (int i = 0; i < auctions.length(); ++i) {
                     JSONObject auction_data = auctions.getJSONObject(i);
 
+                    double product_market_price;
+                    double accumulated_price;
+
                     //Product attributes
                     String product_name = auction_data.getString("product_name");
                     String product_description = auction_data.getString("product_description");
-                    double product_market_price = auction_data.getDouble("market_price");
+                    if (!auction_data.isNull("market_price")) {
+                        product_market_price = auction_data.getDouble("market_price");
+                    } else {
+                        product_market_price = 0.00;
+                    }
                     String product_image_url = auction_data.getJSONArray("product_images").getJSONObject(0).getString("url");
 
                     //Auction attributes.
                     int id = auction_data.getInt("id_auction");
                     int status = auction_data.getInt("status");
                     int remaining_time = auction_data.getInt("time_remaining");
-                    double accumulated_price = auction_data.getDouble("accumulated_price");
+                    if (!auction_data.isNull("accumulated_price")) {
+                        accumulated_price = auction_data.getDouble("accumulated_price");
+                    } else {
+                        accumulated_price = 0.00;
+                    }
 
                     //Create Auction (and Product) objects.
                     auctions_array.add(new Auction(product_name, product_description, product_market_price, product_image_url, id, status, remaining_time, accumulated_price));

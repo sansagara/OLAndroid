@@ -6,7 +6,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -33,11 +32,6 @@ public class SigninActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //Toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         //Debug mode On!
@@ -90,8 +84,8 @@ public class SigninActivity extends AppCompatActivity {
         InputText3.setTypeface(typeFace);
 
 
-        final Button createAccountButton = (Button) findViewById(R.id.create_account);
-        createAccountButton.setOnClickListener( new View.OnClickListener() {
+        final Button logintButton = (Button) findViewById(R.id.login_button);
+        logintButton.setOnClickListener( new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -144,7 +138,7 @@ public class SigninActivity extends AppCompatActivity {
             //put "device" object into "devices" array.
             devices.put(device);
             //put first-level nodes. login is nickname on db. login is email on db.
-            createUserJSON.put("nickname" , login);
+            createUserJSON.put("login" , login);
             createUserJSON.put("password", password);
             createUserJSON.put("facebookId", facebookId);
             createUserJSON.put("country", 3);

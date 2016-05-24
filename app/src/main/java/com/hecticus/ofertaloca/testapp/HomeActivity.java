@@ -2,8 +2,8 @@ package com.hecticus.ofertaloca.testapp;
 
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -51,7 +51,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent myIntent = new Intent(HomeActivity.this, OfertalocaActivity.class);
+                Intent myIntent = new Intent(HomeActivity.this, SigninActivity.class);
                 HomeActivity.this.startActivity(myIntent);
                 finish();
 

@@ -211,9 +211,10 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
         createBidHistoryTable(bids);
 
         //Create HTML Product Description detail.
+        String descriptionURL = (auction_detail.getDescriptionPath());
         WebView productHTMLDescription = (WebView) findViewById(R.id.webView);
         productHTMLDescription.setWebViewClient(new WebViewClient());
-        productHTMLDescription.loadUrl("https://es.wikipedia.org/wiki/Moto_G");
+        productHTMLDescription.loadUrl(descriptionURL);
 
     }
 
