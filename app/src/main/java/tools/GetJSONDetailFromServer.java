@@ -102,10 +102,19 @@ public class GetJSONDetailFromServer extends AsyncTask<String,String,String> {
                 //Get response object node from JSON.
                 JSONObject auction_data = JSONResponse.getJSONObject("response");
 
+                double product_market_price;
+                double accumulated_price;
+
                 //Product attributes
                 String product_name = auction_data.getString("product_name");
                 String product_description = auction_data.getString("product_description");
-                double product_market_price = auction_data.getDouble("market_price");
+
+                if (!auction_data.isNull("market_price")) {
+                    product_market_price = auction_data.getDouble("market_price");
+                } else {
+                    product_market_price = 0.00;
+                }
+
                 String product_image_url = auction_data.getJSONArray("product_images").getJSONObject(0).getString("url");
                 String product_description_url = auction_data.getString("path_description");
 
@@ -113,7 +122,11 @@ public class GetJSONDetailFromServer extends AsyncTask<String,String,String> {
                 int id = auction_data.getInt("id_auction");
                 int status = auction_data.getInt("status");
                 int remaining_time = auction_data.getInt("time_remaining");
-                double accumulated_price = auction_data.getDouble("accumulated_price");
+                if (!auction_data.isNull("accumulated_price")) {
+                    accumulated_price = auction_data.getDouble("accumulated_price");
+                } else {
+                    accumulated_price = 0.00;
+                }
 
                 //Get Bids for history!.
                 JSONArray bids = auction_data.getJSONArray("bids_list");

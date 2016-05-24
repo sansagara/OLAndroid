@@ -61,7 +61,7 @@ public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
 
         // Create some items
         auctions = new ArrayList<>();
-        for (int i = 0; i < 20; ++i) {
+        for (int i = 0; i < 5; ++i) {
             auctions.add(new Auction("Product " + i, "Description for Product " + i));
         }
 
@@ -106,7 +106,9 @@ public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
         if (auction.getStatus() > 0) holder.padlock.setImageResource(R.drawable.padlock2);
 
         //Async download image.
-        if (auction.getImage_url() != null) new DownloadImageTask(holder.productImage).execute(auction.getImage_url());
+        if (auction.getImage_url() != null && auction.getImage_url().isEmpty()) {
+            new DownloadImageTask(holder.productImage).execute(auction.getImage_url());
+        }
 
 
         //Get a click listener on each card.
