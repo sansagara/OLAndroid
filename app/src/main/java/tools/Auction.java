@@ -13,6 +13,7 @@ public class Auction extends Product {
     protected int status;
     protected int remaining_time = 1;
     protected double accumulated_price;
+    protected double list_price = 10.0;
     protected double last_bid;
     protected List<Bid> bids;
     protected String description_path;
@@ -68,7 +69,9 @@ public class Auction extends Product {
 
     }
 
-
+    public double getList_price() {
+        return list_price;
+    }
     public int getID() {
         return id;
     }

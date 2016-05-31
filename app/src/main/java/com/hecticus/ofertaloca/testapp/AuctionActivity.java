@@ -161,12 +161,12 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
         currentPrice.setText(auction_detail.getLast_bid().toString());
 
         //Handler for timer.
-        final Handler mHandler = new Handler();
+        final Handler aHandler = new Handler();
 
         //Timer handling.
-        Runnable hMyTimeTask = new Runnable() {
-            int nCounter = fauction_detail.getRemainingTime();
+        Runnable aMyTimeTask = new Runnable() {
 
+            int nCounter = fauction_detail.getRemainingTime();
             public void run() {
                 if (nCounter > 60) nCounter = 60;
                 nCounter--;
@@ -174,15 +174,16 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
 
                 //Delay execution by one second!
                 if (nCounter > 0) {
-                    mHandler.postDelayed(this, 1000);
+                    aHandler.postDelayed(this, 1000);
                 } else {
                     //TODO:: Go and make a new request to the server and get updated status.
+                    Toast.makeText(getApplicationContext(), "Auction timer ended!", Toast.LENGTH_LONG).show();
                 }
             }
         };
 
         //Start timer immediately
-        mHandler.post(hMyTimeTask);
+        aHandler.post(aMyTimeTask);
 
         //Remaining Bids!
         String remainingBidsPrev = getResources().getString(R.string.auction_default_remainingbids);

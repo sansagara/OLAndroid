@@ -64,4 +64,9 @@
     <string name="toast_user_exists_but_logged">Ud. ya dispone de una cuenta. Accediendo…</string>
     <string name="drawer_open">Abierto</string>
     <string name="drawer_close">Cerrado</string>
+    <string name="drawer_auctions">Subastas</string>
+    <string name="drawer_buy_bids">Comprar Paquetes</string>
+    <string name="drawer_bid_history">Historial de Ofertas</string>
+    <string name="drawer_remaining_bids">Bids restantes: %1$d</string>
+    <string name="list_price_0">Precio Lista: %1$.2f</string>
 </resources>

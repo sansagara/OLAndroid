@@ -150,6 +150,9 @@ public class SendJSONDataToServer extends AsyncTask<String,String,String> {
                     //Get the userID
                     int userID = JSONResponse.getInt("id_client");
                     String nickname = JSONResponse.getString("nickname");
+//                    String email = JSONResponse.getString("email");
+//                    int remainingBids = JSONResponse.getInt("id_client");
+
 
                     //Save to Shared Preferences
                     final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -157,6 +160,8 @@ public class SendJSONDataToServer extends AsyncTask<String,String,String> {
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putInt(context.getString(R.string.prefs_userid_key), userID);
                     editor.putString(context.getString(R.string.prefs_nickname_key), nickname);
+//                    editor.putString(context.getString(R.string.prefs_email_key), email);
+//                    editor.putString(context.getString(R.string.prefs_remaining_bids_key), remainingBids);
                     editor.apply();
 
                     //Handle special case when user already logged in. (Just send a toast)

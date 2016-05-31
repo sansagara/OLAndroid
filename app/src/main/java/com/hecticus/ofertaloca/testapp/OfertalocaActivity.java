@@ -46,6 +46,8 @@ public class OfertalocaActivity extends AppCompatActivity {
         final int userID =  prefs.getInt(getString(R.string.prefs_userid_key), 0);
         final String nickname = prefs.getString(getString(R.string.prefs_nickname_key), "");
         final String regID = prefs.getString(getString(R.string.prefs_registration_id_key), "");
+        final String email = prefs.getString(getString(R.string.prefs_email_key), "cliente@ofertaloca.com");
+        final int remainingBids = prefs.getInt(getString(R.string.prefs_remaining_bids_key), 0);
         Toast.makeText(getApplicationContext(), "userID: " + userID + " nickname: " + nickname + " regID: " + regID, Toast.LENGTH_LONG).show();
 
         if (userID == 0) {
@@ -61,7 +63,7 @@ public class OfertalocaActivity extends AppCompatActivity {
         //Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        initNavigationDrawer();
+        initNavigationDrawer(email, remainingBids);
 
         //Pager
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -150,15 +152,14 @@ public class OfertalocaActivity extends AppCompatActivity {
             //handleMenuSearch();
         } else if (id == R.id.action_user) {
             Toast.makeText(getApplicationContext(), getString(R.string.toast_taking_to_login), Toast.LENGTH_LONG).show();
-            Intent myIntent = new Intent(OfertalocaActivity.this, HomeActivity.class);
-            OfertalocaActivity.this.startActivity(myIntent);
+            OfertalocaActivity.this.startActivity(new Intent(OfertalocaActivity.this, HomeActivity.class));
             finish();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void initNavigationDrawer() {
+    public void initNavigationDrawer(String email, int remainingBids) {
 
         NavigationView navigationView = (NavigationView)findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -168,20 +169,22 @@ public class OfertalocaActivity extends AppCompatActivity {
                 int id = menuItem.getItemId();
 
                 switch (id){
-                    case R.id.home:
-                        Toast.makeText(getApplicationContext(),"Home",Toast.LENGTH_SHORT).show();
+                    case R.id.auctions:
+                        Toast.makeText(getApplicationContext(),"Auctions",Toast.LENGTH_SHORT).show();
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.settings:
                         Toast.makeText(getApplicationContext(),"Settings",Toast.LENGTH_SHORT).show();
                         drawerLayout.closeDrawers();
+                        startActivity(new Intent(OfertalocaActivity.this, PreferencesActivity.class));
                         break;
-                    case R.id.trash:
-                        Toast.makeText(getApplicationContext(),"Trash",Toast.LENGTH_SHORT).show();
+                    case R.id.help:
+                        Toast.makeText(getApplicationContext(),"Help",Toast.LENGTH_SHORT).show();
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.logout:
-                        finish();
+                        OfertalocaActivity.this.startActivity(new Intent(OfertalocaActivity.this, HomeActivity.class));
+                        break;
 
                 }
                 return true;
@@ -190,8 +193,8 @@ public class OfertalocaActivity extends AppCompatActivity {
         View header = navigationView.getHeaderView(0);
         TextView dr_email = (TextView)header.findViewById(R.id.drawer_email);
         TextView dr_bids = (TextView)header.findViewById(R.id.drawer_remaining_bids);
-        dr_email.setText("leonel.atencio@hecticus.com");
-        dr_bids.setText("Remaining bids: 0");
+        dr_email.setText(email);
+        dr_bids.setText( String.format(getString(R.string.drawer_remaining_bids), remainingBids) );
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer);
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close){

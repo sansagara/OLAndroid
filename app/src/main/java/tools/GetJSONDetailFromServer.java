@@ -129,16 +129,19 @@ public class GetJSONDetailFromServer extends AsyncTask<String,String,String> {
                 }
 
                 //Get Bids for history!.
-                JSONArray bids = auction_data.getJSONArray("bids_list");
                 ArrayList<Bid> bids_list = new ArrayList<>();
-                for (int i = 0; i < bids.length(); ++i) {
-                    JSONObject bid = bids.getJSONObject(i);
-                    String nickname = bid.getString("client");
-                    double accumulated = bid.getDouble("accumulated");
-                    double value = bid.getDouble("value");
-                    bids_list.add(new Bid(nickname, accumulated, value));
-                }
 
+                if (!auction_data.isNull("bids_list")) {
+                    JSONArray bids = auction_data.getJSONArray("bids_list");
+
+                    for (int i = 0; i < bids.length(); ++i) {
+                        JSONObject bid = bids.getJSONObject(i);
+                        String nickname = bid.getString("client");
+                        double accumulated = bid.getDouble("accumulated");
+                        double value = bid.getDouble("value");
+                        bids_list.add(new Bid(nickname, accumulated, value));
+                    }
+                }
                 //Create Auction (and Product) objects.
                 Auction auction_detail = new Auction(product_name, product_description, product_market_price, product_image_url, id, status, remaining_time, accumulated_price, bids_list, product_description_url);
 

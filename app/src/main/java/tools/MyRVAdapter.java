@@ -36,6 +36,7 @@ public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
         TextView title;
         TextView subtitle;
         ImageView padlock;
+        TextView listPrice;
         TextView timeRemaining;
         TextView accumulatedPrice;
         ImageView productImage;
@@ -48,6 +49,7 @@ public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
             title = (TextView) itemView.findViewById(R.id.title);
             subtitle = (TextView) itemView.findViewById(R.id.subtitle);
             padlock = (ImageView) itemView.findViewById(R.id.padlock);
+            listPrice = (TextView) itemView.findViewById(R.id.price_list);
             accumulatedPrice = (TextView) itemView.findViewById(R.id.actual_price);
             timeRemaining = (TextView) itemView.findViewById(R.id.time_remaining);
             productImage = (ImageView) itemView.findViewById(R.id.productImage);
@@ -100,13 +102,14 @@ public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
 
         holder.title.setText(auction.getName());
         holder.subtitle.setText(auction.getDescription());
+        holder.listPrice.setText( String.format(context.getString(R.string.list_price_0), auction.getList_price()) );
         holder.accumulatedPrice.setText( String.format("%.2f", auction.getAccumulated_price() ) );
 
         //Set Blue padlock if status is positive.
         if (auction.getStatus() > 0) holder.padlock.setImageResource(R.drawable.padlock2);
 
         //Async download image.
-        if (auction.getImage_url() != null && auction.getImage_url().isEmpty()) {
+        if (auction.getImage_url() != null) {
             new DownloadImageTask(holder.productImage).execute(auction.getImage_url());
         }
 
@@ -143,7 +146,6 @@ public class MyRVAdapter extends RecyclerView.Adapter<MyRVAdapter.ViewHolder>  {
         Runnable hMyTimeTask = new Runnable() {
 
             int nCounter = auction.getRemainingTime();
-
             public void run() {
                 if (nCounter > 60) nCounter = 60;
                 nCounter--;

@@ -1,21 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/menu_top">
         <item
-            android:id="@+id/home"
-            android:title="Home"
-            android:icon="@drawable/ic_home"/>
+            android:id="@+id/auctions"
+            android:title="@string/drawer_auctions"
+            android:icon="@drawable/cart_plus"/>
+        <item
+            android:id="@+id/buy_bids"
+            android:title="@string/drawer_buy_bids"
+            android:icon="@drawable/credit_card"/>
+        <item
+            android:id="@+id/my_orders"
+            android:title="@string/drawer_my_orders"
+            android:icon="@drawable/shopping"/>
+        <item
+            android:id="@+id/bid_history"
+            android:title="@string/drawer_bid_history"
+            android:icon="@drawable/history"/>
+
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/menu_bottom">
         <item
             android:id="@+id/settings"
-            android:title="Settings"
-            android:icon="@drawable/ic_setting"/>
+            android:title="@string/drawer_settings"
+            android:icon="@drawable/settings"/>
         <item
-            android:id="@+id/trash"
-            android:title="Trash"
-            android:icon="@drawable/ic_trash"/>
+            android:id="@+id/help"
+            android:title="@string/drawer_help"
+            android:icon="@drawable/help_circle"/>
+
         <item
             android:id="@+id/logout"
-            android:title="Logout"
-            android:icon="@drawable/ic_exit"/>
+            android:title="@string/drawer_logout"
+            android:icon="@drawable/exit_to_app"/>
     </group>
 </menu>
