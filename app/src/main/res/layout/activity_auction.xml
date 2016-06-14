@@ -277,7 +277,7 @@
             </TableLayout>
             <View style="@style/Divider" />
 
-            <!-- Space at the end -->
+            <!-- Spacer-->
             <Space
                 android:layout_width="20dp"
                 android:layout_height="20dp" />
@@ -287,7 +287,15 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/webView" />
 
+            <View style="@style/Divider" />
+
             <!-- Eighth Grid (HTML Product Description) -->
+
+
+            <!-- Space at the end -->
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
 
 
         </LinearLayout>

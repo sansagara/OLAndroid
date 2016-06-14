@@ -7,11 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,19 +20,19 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import fragments.AllAuctions;
-import fragments.ComingAuctions;
-import fragments.OpenAuctions;
+import fragments.Auctions;
+import fragments.BuyBids;
+import fragments.Help;
+import fragments.History;
+import fragments.MyOrders;
 
 
 public class OfertalocaActivity extends AppCompatActivity {
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
-    private DrawerLayout drawerLayout;
+
     private Toolbar toolbar;
+    private DrawerLayout drawerLayout;
+    private MenuItem drawerSelected;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,60 +60,119 @@ public class OfertalocaActivity extends AppCompatActivity {
         //Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //Drawer
         initNavigationDrawer(email, remainingBids);
 
-        //Pager
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-
     }
 
 
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+    // -----------------
+    // NAVIGATION DRAWER
+    // -----------------
 
-        adapter.addFragment(new AllAuctions(), getString(R.string.tab1));
-        adapter.addFragment(new OpenAuctions(), getString(R.string.tab2));
-        adapter.addFragment(new ComingAuctions(), getString(R.string.tab3));
-        /*
-        adapter.addFragment(new WinnersAuctions(), getString(R.string.tab4));
-        */
-        viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(2);
+    public void initNavigationDrawer(String email, int remainingBids) {
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        if (navigationView != null) {
+
+            //Style Navigation Drawer
+            View header = navigationView.getHeaderView(0);
+            TextView dr_email = (TextView) header.findViewById(R.id.drawer_email);
+            TextView dr_bids = (TextView) header.findViewById(R.id.drawer_remaining_bids);
+            dr_email.setText(email);
+            dr_bids.setText(String.format(getString(R.string.drawer_remaining_bids), remainingBids));
+
+            //Setup Some more stuff.
+            drawerToggle();
+            prepararDrawer(navigationView);
+            seleccionarItem(navigationView.getMenu().getItem(0));
+            navigationView.getMenu().getItem(0).setChecked(true);
+            drawerSelected = navigationView.getMenu().getItem(0);
+
+        }
+
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
+    public void drawerToggle() {
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close){
 
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
+            @Override
+            public void onDrawerClosed(View v){
+                super.onDrawerClosed(v);
+            }
+
+            @Override
+            public void onDrawerOpened(View v) {
+                super.onDrawerOpened(v);
+            }
+        };
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+    }
+
+    private void prepararDrawer(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+            new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(MenuItem menuItem) {
+                    menuItem.setChecked(true);
+                    seleccionarItem(menuItem);
+                    drawerLayout.closeDrawers();
+                    return true;
+                }
+            });
+
+    }
+
+    private void seleccionarItem(MenuItem itemDrawer) {
+        Fragment fragmentoGenerico = null;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        if (itemDrawer != drawerSelected) {
+            drawerSelected = itemDrawer;
+            switch (itemDrawer.getItemId()) {
+                case R.id.auctions:
+                    fragmentoGenerico = new Auctions();
+                    break;
+                    case R.id.buy_bids:
+                        fragmentoGenerico = new BuyBids();
+                        break;
+                    case R.id.my_orders:
+                        fragmentoGenerico = new MyOrders();
+                        break;
+                    case R.id.bid_history:
+                        fragmentoGenerico = new History();
+                        break;
+                    case R.id.settings:
+                        startActivity(new Intent(this, PreferencesActivity.class));
+                        break;
+                    case R.id.help:
+                        fragmentoGenerico = new Help();
+                        break;
+                    case R.id.logout:
+                        Toast.makeText(getApplicationContext(), "Logging you out...", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(this, HomeActivity.class));
+                        break;
+            }
         }
 
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
+        if (fragmentoGenerico != null) {
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.contenedor_principal, fragmentoGenerico)
+                    .commit();
         }
 
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
+        // Setear título actual
+        setTitle(itemDrawer.getTitle());
     }
 
 
+    //
+    // TOOLBAR MENU
+    //
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -150,6 +206,7 @@ public class OfertalocaActivity extends AppCompatActivity {
         } else if (id == R.id.action_search) {
             Toast.makeText(getApplicationContext(), getString(R.string.toast_coming_soon), Toast.LENGTH_LONG).show();
             //handleMenuSearch();
+            return true;
         } else if (id == R.id.action_user) {
             Toast.makeText(getApplicationContext(), getString(R.string.toast_taking_to_login), Toast.LENGTH_LONG).show();
             OfertalocaActivity.this.startActivity(new Intent(OfertalocaActivity.this, HomeActivity.class));
@@ -158,61 +215,6 @@ public class OfertalocaActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    public void initNavigationDrawer(String email, int remainingBids) {
-
-        NavigationView navigationView = (NavigationView)findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-
-                int id = menuItem.getItemId();
-
-                switch (id){
-                    case R.id.auctions:
-                        Toast.makeText(getApplicationContext(),"Auctions",Toast.LENGTH_SHORT).show();
-                        drawerLayout.closeDrawers();
-                        break;
-                    case R.id.settings:
-                        Toast.makeText(getApplicationContext(),"Settings",Toast.LENGTH_SHORT).show();
-                        drawerLayout.closeDrawers();
-                        startActivity(new Intent(OfertalocaActivity.this, PreferencesActivity.class));
-                        break;
-                    case R.id.help:
-                        Toast.makeText(getApplicationContext(),"Help",Toast.LENGTH_SHORT).show();
-                        drawerLayout.closeDrawers();
-                        break;
-                    case R.id.logout:
-                        OfertalocaActivity.this.startActivity(new Intent(OfertalocaActivity.this, HomeActivity.class));
-                        break;
-
-                }
-                return true;
-            }
-        });
-        View header = navigationView.getHeaderView(0);
-        TextView dr_email = (TextView)header.findViewById(R.id.drawer_email);
-        TextView dr_bids = (TextView)header.findViewById(R.id.drawer_remaining_bids);
-        dr_email.setText(email);
-        dr_bids.setText( String.format(getString(R.string.drawer_remaining_bids), remainingBids) );
-        drawerLayout = (DrawerLayout)findViewById(R.id.drawer);
-
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close){
-
-            @Override
-            public void onDrawerClosed(View v){
-                super.onDrawerClosed(v);
-            }
-
-            @Override
-            public void onDrawerOpened(View v) {
-                super.onDrawerOpened(v);
-            }
-        };
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-    }
-
 
 
 }

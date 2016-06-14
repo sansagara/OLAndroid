@@ -29,31 +29,8 @@ public class AllAuctions extends Fragment implements AsyncResponse {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        // Inflate the layout for this fragment
-        View V = inflater.inflate(R.layout.content_ofertaloca_all, container, false);
-
-        //Get the RecyclerView
-        RecyclerView mRecyclerView = (RecyclerView) V.findViewById(R.id.my_recycler_view);
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        // specify an adapter
-        mAdapter = new MyRVAdapter(getActivity().getApplicationContext());
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        // Retain this fragment across configuration changes.
+        setRetainInstance(true);
 
         // Call with 0 in auctionType for All Auctions
         GetJSONDataFromServer asyncTask = new GetJSONDataFromServer(getActivity().getApplicationContext(), this, 0);
@@ -65,7 +42,37 @@ public class AllAuctions extends Fragment implements AsyncResponse {
         //execute the async task
         asyncTask.execute();
 
-        return mRecyclerView;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        if (savedInstanceState == null) {
+            // Inflate the layout for this fragment
+            View V = inflater.inflate(R.layout.content_ofertaloca_all, container, false);
+
+            //Get the RecyclerView
+            RecyclerView mRecyclerView = (RecyclerView) V.findViewById(R.id.my_recycler_view);
+
+            // use this setting to improve performance if you know that changes
+            // in content do not change the layout size of the RecyclerView
+            mRecyclerView.setHasFixedSize(true);
+
+            // use a linear layout manager
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+            mRecyclerView.setLayoutManager(mLayoutManager);
+
+            // specify an adapter
+            mAdapter = new MyRVAdapter(getActivity().getApplicationContext());
+            mRecyclerView.setAdapter(mAdapter);
+            mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+
+            return mRecyclerView;
+        } else {
+            return null;
+        }
     }
 
 

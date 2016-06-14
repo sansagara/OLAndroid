@@ -13,6 +13,9 @@ import com.hecticus.ofertaloca.testapp.R;
  */
 public class FragmentPreferences extends PreferenceFragment {
 
+    public FragmentPreferences() {
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -56,6 +56,7 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
         final int userID = prefs.getInt(getString(R.string.prefs_userid_key), 0);
         final String nickName = prefs.getString(getString(R.string.prefs_nickname_key), "0");
         final String regID = prefs.getString(getString(R.string.prefs_registration_id_key), "");
+        final int remBids = prefs.getInt(getString(R.string.prefs_remaining_bids_key), 0);
         Toast.makeText(getApplicationContext(), "userID: " + userID + " nickName: " + nickName + " regID: " + regID, Toast.LENGTH_LONG).show();
 
         //Toolbar
@@ -112,7 +113,7 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
         TextView remainingBids = (TextView) findViewById(R.id.remainingBids);
         String remainingBidsPrev = getResources().getString(R.string.auction_default_remainingbids);
         //TODO: Replace this hardcoded 10 with the remaining bids the user haves.
-        String remainingBidsFinal = String.format(remainingBidsPrev, 10);
+        String remainingBidsFinal = String.format(remainingBidsPrev, remBids);
         remainingBids.setText(remainingBidsFinal);
 
         //Format Current price and buy now..
