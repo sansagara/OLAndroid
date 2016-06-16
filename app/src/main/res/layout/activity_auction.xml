@@ -272,7 +272,9 @@
                 android:layout_height="wrap_content"
                 android:stretchColumns="0,1,2"
                 android:id="@+id/bidHistory"
-                android:layout_margin="10dp">
+                android:layout_margin="10dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal">
 
             </TableLayout>
             <View style="@style/Divider" />

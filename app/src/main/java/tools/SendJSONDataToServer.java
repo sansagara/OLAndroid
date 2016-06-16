@@ -150,8 +150,8 @@ public class SendJSONDataToServer extends AsyncTask<String,String,String> {
                     //Get the userID
                     int userID = JSONResponse.getInt("id_client");
                     String nickname = JSONResponse.getString("nickname");
-//                    String email = JSONResponse.getString("email");
-//                    int remainingBids = JSONResponse.getInt("id_client");
+                    String email = JSONResponse.getString("login");
+                    int remainingBids = JSONResponse.getInt("available_bids");
 
 
                     //Save to Shared Preferences
@@ -160,8 +160,8 @@ public class SendJSONDataToServer extends AsyncTask<String,String,String> {
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putInt(context.getString(R.string.prefs_userid_key), userID);
                     editor.putString(context.getString(R.string.prefs_nickname_key), nickname);
-//                    editor.putString(context.getString(R.string.prefs_email_key), email);
-//                    editor.putString(context.getString(R.string.prefs_remaining_bids_key), remainingBids);
+                    editor.putString(context.getString(R.string.prefs_email_key), email);
+                    editor.putInt(context.getString(R.string.prefs_remaining_bids_key), remainingBids);
                     editor.apply();
 
                     //Handle special case when user already logged in. (Just send a toast)
@@ -184,7 +184,7 @@ public class SendJSONDataToServer extends AsyncTask<String,String,String> {
             }
 
         } else {
-            Toast.makeText(context, "Something gone wrong. Null result!", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Something gone wrong. Null result!", Toast.LENGTH_SHORT).show();
         }
     } // End onPostExecute method
 

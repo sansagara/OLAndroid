@@ -38,6 +38,14 @@ import tools.SendBidToServer;
 
 public class AuctionActivity extends AppCompatActivity implements AsyncResponseDetail {
 
+    int remBids;
+    String regID;
+    String nickName;
+    int userID;
+    String product_name;
+    int auction_id;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,16 +56,15 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
 
         //Get extra (auction_id and product_name) params via intent.
         Bundle extras = getIntent().getExtras();
-        final int auction_id = extras.getInt("auction_id");
-        final String product_name = extras.getString("product_name");
+        auction_id = extras.getInt("auction_id");
+        product_name = extras.getString("product_name");
 
         //Get Client info from Shared Prefs.
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(AuctionActivity.this);
-        final int userID = prefs.getInt(getString(R.string.prefs_userid_key), 0);
-        final String nickName = prefs.getString(getString(R.string.prefs_nickname_key), "0");
-        final String regID = prefs.getString(getString(R.string.prefs_registration_id_key), "");
-        final int remBids = prefs.getInt(getString(R.string.prefs_remaining_bids_key), 0);
-        Toast.makeText(getApplicationContext(), "userID: " + userID + " nickName: " + nickName + " regID: " + regID, Toast.LENGTH_LONG).show();
+        userID = prefs.getInt(getString(R.string.prefs_userid_key), 0);
+        nickName = prefs.getString(getString(R.string.prefs_nickname_key), "0");
+        regID = prefs.getString(getString(R.string.prefs_registration_id_key), "");
+        remBids = prefs.getInt(getString(R.string.prefs_remaining_bids_key), 0);
 
         //Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -75,15 +82,19 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
         auctionProductName.setText(product_name);
 
         //Inform Auction ID via Toast
-        Toast.makeText(getApplicationContext(), "AuctionID: " + auction_id, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "AuctionID: " + auction_id, Toast.LENGTH_SHORT).show();
 
         //Button Handler for Bid Now
         bidNowButton.setOnClickListener( new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                SendBid(1, userID, 0, false, product_name);
-
+                if (remBids > 0) {
+                    SendBid(auction_id, userID, 0, false, product_name);
+                    if (remBids > 0) {remBids--;}
+                } else {
+                    Toast.makeText(getApplicationContext(), "You don't have enough bids.", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -93,9 +104,13 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
 
             @Override
             public void onClick(View v) {
-                final EditText bidsToSchedule = (EditText) findViewById(R.id.auction_bidprogram_edit);
-                int bidQuant = Integer.parseInt(bidsToSchedule.getText().toString());
-                SendBid(1, userID, bidQuant, false, product_name);
+                if (remBids > 0) {
+                    final EditText bidsToSchedule = (EditText) findViewById(R.id.auction_bidprogram_edit);
+                    int bidQuant = Integer.parseInt(bidsToSchedule.getText().toString());
+                    SendBid(auction_id, userID, bidQuant, false, product_name);
+                } else {
+                    Toast.makeText(getApplicationContext(), "You don't have enough bids.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -104,7 +119,7 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Buying product " + product_name + " for retail price...", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Buying product " + product_name + " for retail price...", Toast.LENGTH_SHORT).show();
                 //TODO: Call WS for Buy Now (No WS yet)
             }
         });
@@ -112,7 +127,6 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
         //Format Remaining Bids with Default Bid.
         TextView remainingBids = (TextView) findViewById(R.id.remainingBids);
         String remainingBidsPrev = getResources().getString(R.string.auction_default_remainingbids);
-        //TODO: Replace this hardcoded 10 with the remaining bids the user haves.
         String remainingBidsFinal = String.format(remainingBidsPrev, remBids);
         remainingBids.setText(remainingBidsFinal);
 
@@ -178,7 +192,7 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
                     aHandler.postDelayed(this, 1000);
                 } else {
                     //TODO:: Go and make a new request to the server and get updated status.
-                    Toast.makeText(getApplicationContext(), "Auction timer ended!", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "Auction timer ended!", Toast.LENGTH_LONG).show();
                 }
             }
         };
@@ -188,8 +202,7 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
 
         //Remaining Bids!
         String remainingBidsPrev = getResources().getString(R.string.auction_default_remainingbids);
-        //TODO: Replace this hardcoded 10 with the remaining bids the user haves.
-        String remainingBidsFinal = String.format(remainingBidsPrev, 10);
+        String remainingBidsFinal = String.format(remainingBidsPrev, remBids);
         remainingBids.setText(remainingBidsFinal);
 
         //Buy now button
@@ -226,7 +239,7 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
 
         TableRow htr = new TableRow(this);
         TextView hnick = new TextView(this);
-        hnick.setText("Nick");
+        hnick.setText("Nickn");
         hnick.setTypeface(null, Typeface.BOLD);
         hnick.setGravity(Gravity.CENTER);
         htr.addView(hnick);
@@ -256,14 +269,18 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
             }
             TextView nick = new TextView(this);
             nick.setText(bid.getClient());
+            nick.setGravity(Gravity.CENTER);
             tr.addView(nick);
+
 
             TextView acum = new TextView(this);
             acum.setText( df.format( bid.getAccumulated() ) );
+            nick.setGravity(Gravity.CENTER);
             tr.addView(acum);
 
             TextView val = new TextView(this);
             val.setText( df.format( bid.getValue() ) );
+            nick.setGravity(Gravity.CENTER);
             tr.addView(val);
 
             tl.addView(tr);
@@ -288,9 +305,9 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Toast.makeText(getApplicationContext(), getString(R.string.toast_biddingnow) + productName + " for clientID: " + ClientID, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.toast_biddingnow) + productName + ". clientID: " + ClientID, Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getApplicationContext(), getString(R.string.toast_biddingscheduled) + productName + " for clientID: " + ClientID, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.toast_biddingscheduled) + productName + ". clientID: " + ClientID, Toast.LENGTH_SHORT).show();
         }
         //call to async class
         new SendBidToServer(getApplicationContext(), isScheduled, AuctionID, ClientID ).execute(String.valueOf(bidDataJSON));

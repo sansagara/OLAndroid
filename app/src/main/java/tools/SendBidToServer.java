@@ -69,6 +69,7 @@ public class SendBidToServer extends AsyncTask<String,String,String> {
         String JsonDATA = params[0];
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
+        Log.d("REST", "Posting to WS: " + ApiRoute);
 
         try {
             URL url = new URL( ApiRoute);
@@ -77,10 +78,10 @@ public class SendBidToServer extends AsyncTask<String,String,String> {
 
             // is output buffer writer
             urlConnection.setRequestMethod("POST");
-            urlConnection.setRequestProperty("Host", "myhost.com");
+            //urlConnection.setRequestProperty("Host", "myhost.com");
             //urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; PPC; en-US; rv:1.3.1)");
-            urlConnection.setRequestProperty("Content-Type", "application/json");
-            urlConnection.setRequestProperty("Accept", "application/json");
+            //urlConnection.setRequestProperty("Content-Type", "application/json");
+            //urlConnection.setRequestProperty("Accept", "application/json");
             //urlConnection.setRequestProperty("Accept-Charset", "UTF-8");
 
             //set headers and method
@@ -89,6 +90,11 @@ public class SendBidToServer extends AsyncTask<String,String,String> {
 
             // json data
             writer.close();
+
+            if (urlConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                return urlConnection.getErrorStream().toString();
+            }
+
             InputStream inputStream = urlConnection.getInputStream();
 
             //input stream
@@ -141,7 +147,8 @@ public class SendBidToServer extends AsyncTask<String,String,String> {
     @Override
     protected void onPostExecute(String response) {
         if (response != null) {
-            Toast.makeText(context, "Posting to WS: " + ApiRoute , Toast.LENGTH_SHORT).show();
+
+            Log.d("REST", "Post Executed: " + response);
             Toast.makeText(context, "Post Executed: " + response, Toast.LENGTH_LONG).show();
 
             try {
@@ -196,7 +203,7 @@ public class SendBidToServer extends AsyncTask<String,String,String> {
             }
 
         } else {
-            Toast.makeText(context, "Something gone wrong. Null result!", Toast.LENGTH_LONG).show();
+
         }
     } // End onPostExecute method
 

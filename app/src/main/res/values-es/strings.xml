@@ -45,7 +45,6 @@
     <string name="toast_coming_soon">Pronto…</string>
     <string name="search_settings">Buscar</string>
     <string name="user_settings">Perfil</string>
-    <string name="hello_blank_fragment">Hola fragmento blanco</string>
     <string name="prefs_app_version_summ">Version del App</string>
     <string name="prefs_payment_category">Detalle de Pagos</string>
     <string name="prefs_push_category">Notificaciones PUSH</string>
@@ -73,4 +72,7 @@
     <string name="drawer_my_orders">Mis Ordenes</string>
     <string name="drawer_logout">Salir</string>
     <string name="drawer_help">Ayuda</string>
+    <string name="check_remaining_bids">Sincronizar Bids Disponibles</string>
+    <string name="toast_logging_out">Cerrando sesión...</string>
+    <string name="toast_getting_bids">Obteniendo bids disponibles...</string>
 </resources>

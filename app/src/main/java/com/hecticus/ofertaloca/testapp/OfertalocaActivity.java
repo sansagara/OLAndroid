@@ -32,7 +32,9 @@ public class OfertalocaActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private MenuItem drawerSelected;
-
+    public int userID;
+    public int remainingBids;
+    TextView dr_bids;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +42,12 @@ public class OfertalocaActivity extends AppCompatActivity {
 
         //Get Client info from Shared Prefs.
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OfertalocaActivity.this);
-        final int userID =  prefs.getInt(getString(R.string.prefs_userid_key), 0);
+        userID =  prefs.getInt(getString(R.string.prefs_userid_key), 0);
         final String nickname = prefs.getString(getString(R.string.prefs_nickname_key), "");
         final String regID = prefs.getString(getString(R.string.prefs_registration_id_key), "");
         final String email = prefs.getString(getString(R.string.prefs_email_key), "cliente@ofertaloca.com");
-        final int remainingBids = prefs.getInt(getString(R.string.prefs_remaining_bids_key), 0);
-        Toast.makeText(getApplicationContext(), "userID: " + userID + " nickname: " + nickname + " regID: " + regID, Toast.LENGTH_LONG).show();
+        remainingBids = prefs.getInt(getString(R.string.prefs_remaining_bids_key), 0);
+        Toast.makeText(getApplicationContext(), "userID: " + userID + " nickname: " + nickname + " regID: " + regID, Toast.LENGTH_SHORT).show();
 
         if (userID == 0) {
             //If no userID stored, get the client to the home screen so they can signin/signup.
@@ -66,7 +68,6 @@ public class OfertalocaActivity extends AppCompatActivity {
 
     }
 
-
     // -----------------
     // NAVIGATION DRAWER
     // -----------------
@@ -78,7 +79,7 @@ public class OfertalocaActivity extends AppCompatActivity {
             //Style Navigation Drawer
             View header = navigationView.getHeaderView(0);
             TextView dr_email = (TextView) header.findViewById(R.id.drawer_email);
-            TextView dr_bids = (TextView) header.findViewById(R.id.drawer_remaining_bids);
+            dr_bids = (TextView) header.findViewById(R.id.drawer_remaining_bids);
             dr_email.setText(email);
             dr_bids.setText(String.format(getString(R.string.drawer_remaining_bids), remainingBids));
 
@@ -152,7 +153,7 @@ public class OfertalocaActivity extends AppCompatActivity {
                         fragmentoGenerico = new Help();
                         break;
                     case R.id.logout:
-                        Toast.makeText(getApplicationContext(), "Logging you out...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.toast_logging_out), Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(this, HomeActivity.class));
                         break;
             }
@@ -204,11 +205,11 @@ public class OfertalocaActivity extends AppCompatActivity {
             startActivity(new Intent(OfertalocaActivity.this, PreferencesActivity.class));
             return true;
         } else if (id == R.id.action_search) {
-            Toast.makeText(getApplicationContext(), getString(R.string.toast_coming_soon), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.toast_coming_soon), Toast.LENGTH_SHORT).show();
             //handleMenuSearch();
             return true;
         } else if (id == R.id.action_user) {
-            Toast.makeText(getApplicationContext(), getString(R.string.toast_taking_to_login), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.toast_taking_to_login), Toast.LENGTH_SHORT).show();
             OfertalocaActivity.this.startActivity(new Intent(OfertalocaActivity.this, HomeActivity.class));
             finish();
         }
@@ -216,5 +217,8 @@ public class OfertalocaActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void updateDrawer() {
+        dr_bids.setText(String.format(getString(R.string.drawer_remaining_bids), remainingBids));
+    }
 
 }

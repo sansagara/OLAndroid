@@ -2,6 +2,7 @@ package tools;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.hecticus.ofertaloca.testapp.R;
@@ -33,6 +34,8 @@ public class GetJSONDetailFromServer extends AsyncTask<String,String,String> {
     /**
      * Constructor
      * @param context The calling activity context.
+     * @param delegate The delegate Async
+     *  @param AuctionID The id of the auction
      */
     public GetJSONDetailFromServer(Context context, AsyncResponseDetail delegate, int AuctionID) {
         this.context=context;
@@ -45,9 +48,6 @@ public class GetJSONDetailFromServer extends AsyncTask<String,String,String> {
         this.delegate = delegate;
 
     } // End SendJSONDataToServer constructor.
-
-
-
 
 
     @Override
@@ -83,6 +83,7 @@ public class GetJSONDetailFromServer extends AsyncTask<String,String,String> {
     @Override
     protected void onPostExecute(String response) {
 
+        Log.d("REST", "Getting JSON detail - Got client response: " + response);
         if (response != null) {  // If response is not null.
             //Toast.makeText(context, "Post Executed: " + response, Toast.LENGTH_SHORT).show();
 

@@ -53,6 +53,7 @@
     <string name="api_route_listauction_detailbyid" translatable="false">/api/v1/auction/</string>
     <string name="api_route_bid" translatable="false">/api/v1/auction/%1$d/bid/%2$d</string>
     <string name="api_route_schedulebid" translatable="false">/api/v1/auction/%1$d/schedulebid/%2$d</string>
+    <string name="api_route_get_remaining_bids" translatable="false">/api/v1/client/%1$d</string>
 
 
     <!-- Navigation Tabs -->
@@ -112,5 +113,8 @@
     <string name="drawer_remaining_bids">Remaining Bids: %1$d</string>
     <string name="prefs_email_key" translatable="false">client_email</string>
     <string name="prefs_remaining_bids_key" translatable="false">remaining_bids</string>
+    <string name="check_remaining_bids">Sync Remaining Bids</string>
+    <string name="toast_logging_out">Logging you out...</string>
+    <string name="toast_getting_bids">Getting available bids...</string>
 
 </resources>

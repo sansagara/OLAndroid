@@ -1,8 +1,8 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context="fragments.BuyBids">
 
     <!-- TODO: Update blank fragment layout -->
@@ -14,13 +14,30 @@
         android:id="@+id/textView2"
         android:layout_gravity="center_horizontal" />
 
+    <Space
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
 
-    <com.devmarvel.creditcardentry.library.CreditCardForm
-        android:id="@+id/credit_card_form"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:helper_text_color="@color/colorAccent"
-        app:include_helper="false"
-        app:include_zip="false"/>
 
-</FrameLayout>
+    <View style="@style/Divider" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/check_remaining_bids"
+            android:background="@drawable/button_dark"
+            android:text="@string/check_remaining_bids"
+            android:layout_marginLeft="10dp"
+            android:textColor="@drawable/button_text_dark"
+            android:textAllCaps="true"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+    <View style="@style/Divider" />
+
+
+
+</LinearLayout>
