@@ -1,43 +1,231 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context="fragments.BuyBids">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/drawer_buy_bids"
-        android:id="@+id/textView2"
-        android:layout_gravity="center_horizontal" />
 
     <Space
         android:layout_width="20dp"
         android:layout_height="20dp" />
 
-
     <View style="@style/Divider" />
-    <RelativeLayout
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/select_bid_pack"
+        android:textAllCaps="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="1dp"
+        android:textColor="@color/textBlue" />
+    <View style="@style/Divider" />
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:id="@+id/check_remaining_bids"
-            android:background="@drawable/button_dark"
-            android:text="@string/check_remaining_bids"
-            android:layout_marginLeft="10dp"
-            android:textColor="@drawable/button_text_dark"
-            android:textAllCaps="true"
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/pack1_external"
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp"
-            android:layout_centerVertical="true"/>
-    </RelativeLayout>
-    <View style="@style/Divider" />
+            android:layout_marginTop="20dp"
+            android:layout_weight="1">
 
+
+            <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/pack1_internal"
+                android:clickable="true"
+                android:layout_margin="5dp"
+                android:tag="1"
+                android:onClick="selectPack">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:paddingTop="2dp"
+                    android:id="@+id/drawable_check1"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/drawable_check1"
+                    android:text="@string/pack1_text"
+                    android:textColor="@drawable/button_text_dark"
+                    android:textAllCaps="true"
+                    android:layout_centerHorizontal="true"
+                    android:padding="10dp"
+                    android:textStyle="bold"
+                    android:gravity="center_horizontal" />
+
+            </RelativeLayout>
+
+
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/pack2_external"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1">
+
+            <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/pack2_internal"
+                android:clickable="true"
+                android:layout_margin="5dp"
+                android:tag="2"
+                android:onClick="selectPack">
+
+                <TextView
+                    android:id="@+id/drawable_check2"
+                    android:paddingTop="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/drawable_check2"
+                    android:text="@string/pack2_text"
+                    android:textColor="@drawable/button_text_dark"
+                    android:textAllCaps="true"
+                    android:layout_centerHorizontal="true"
+                    android:padding="10dp"
+                    android:textStyle="bold"
+                    android:gravity="center_horizontal" />
+
+            </RelativeLayout>
+
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/pack3_external"
+        android:layout_margin="20dp">
+
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/pack3_internal"
+            android:clickable="true"
+            android:layout_margin="5dp"
+            android:tag="3"
+            android:onClick="selectPack">
+
+            <TextView
+                android:id="@+id/drawable_check3"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:paddingTop="2dp"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/drawable_check3"
+                android:text="@string/pack3_text"
+                android:textColor="@drawable/button_text_dark"
+                android:textAllCaps="true"
+                android:layout_centerHorizontal="true"
+                android:padding="10dp"
+                android:textStyle="bold"
+                android:gravity="center_horizontal" />
+
+        </RelativeLayout>
+    </FrameLayout>
+
+
+    <View style="@style/Divider" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/select_payment_method"
+        android:textAllCaps="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="1dp"
+        android:textColor="@color/textBlue" />
+    <View style="@style/Divider" />
+    <Space
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/buy_with_msisdn"
+        android:background="@drawable/button_dark"
+        android:text="@string/buy_with_msisdn"
+        android:layout_marginLeft="20dp"
+        android:textColor="@drawable/button_text_dark"
+        android:textAllCaps="true"
+        android:layout_marginRight="20dp"
+        android:tag="0"
+        android:onClick="buyPack" />
+    <Space
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/buy_with_card"
+        android:background="@drawable/button_dark"
+        android:text="@string/buy_with_card"
+        android:layout_marginLeft="20dp"
+        android:textColor="@drawable/button_text_dark"
+        android:textAllCaps="true"
+        android:layout_marginRight="20dp"
+        android:tag="1"
+        android:onClick="buyPack" />
+    <Space
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/check_remaining_bids"
+        android:background="@drawable/button_dark"
+        android:text="@string/check_remaining_bids"
+        android:layout_marginLeft="20dp"
+        android:textColor="@drawable/button_text_dark"
+        android:textAllCaps="true"
+        android:layout_marginRight="20dp"/>
+    <Space
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
 
 
 </LinearLayout>
+
+</ScrollView>

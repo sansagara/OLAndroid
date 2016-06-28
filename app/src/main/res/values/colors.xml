@@ -11,6 +11,9 @@
     <!-- OfertaLoca Specific Style -->
     <color name="mainBlue">#1263ac</color>
     <color name="lightBlue">#1263ac</color>
+    <color name="bgBlue">#e4ebf6</color>
+    <color name="textBlue">#0c203d</color>
+    <color name="boldTextBlue">#093b6d</color>
     <color name="white">#FFFFFF</color>
     <color name="gray">#D3D3D3</color>
     <color name="darkGray">#939393</color>
@@ -18,4 +21,10 @@
     <color name="priceBoxPrice">#b31f24</color>
     <color name="black">#000000</color>
     <color name="White">#FFFFFF</color>
+    <color name="pack1">#f15a25</color>
+    <color name="pack2">#39b44a</color>
+    <color name="pack3">#b10364</color>
+
+
+
 </resources>

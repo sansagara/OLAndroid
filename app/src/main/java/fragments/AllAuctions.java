@@ -29,9 +29,6 @@ public class AllAuctions extends Fragment implements AsyncResponse {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Retain this fragment across configuration changes.
-        setRetainInstance(true);
-
         // Call with 0 in auctionType for All Auctions
         GetJSONDataFromServer asyncTask = new GetJSONDataFromServer(getActivity().getApplicationContext(), this, 0);
 
@@ -41,7 +38,6 @@ public class AllAuctions extends Fragment implements AsyncResponse {
 
         //execute the async task
         asyncTask.execute();
-
     }
 
     @Override
@@ -49,6 +45,7 @@ public class AllAuctions extends Fragment implements AsyncResponse {
                              Bundle savedInstanceState) {
 
         if (savedInstanceState == null) {
+
             // Inflate the layout for this fragment
             View V = inflater.inflate(R.layout.content_ofertaloca_all, container, false);
 
@@ -74,7 +71,6 @@ public class AllAuctions extends Fragment implements AsyncResponse {
             return null;
         }
     }
-
 
     @Override  //this override the implemented method from asyncTask
     public void processFinish(ArrayList auctions_array) {

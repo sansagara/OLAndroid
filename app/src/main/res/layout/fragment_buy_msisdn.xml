@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="@string/phone_number"/>
+
+            <EditText
+                android:id="@+id/ed_owner_name"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="@string/phone_number"
+                android:inputType="textCapCharacters"
+                android:background="@drawable/edittext_light"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:text="@string/carrier"/>
+
+            <Spinner
+                android:id="@+id/planets_spinner"
+                android:layout_width="fill_parent"
+                android:background="@drawable/spinner"
+                android:layout_height="40dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:entries="@array/carriers_array"
+                android:prompt="@string/carrier_prompt" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/buy_with_msisdn"
+                android:background="@drawable/button_dark"
+                android:text="@string/buy_with_msisdn"
+                android:layout_marginLeft="20dp"
+                android:textColor="@drawable/button_text_dark"
+                android:textAllCaps="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</ScrollView>

@@ -40,7 +40,7 @@
     <string name="prefs_user_category">Detalles de Usuario</string>
     <string name="prefs_userid_summ">El UserID para probar las subastas.</string>
     <string name="prefs_userid_tittle">User ID</string>
-    <string name="prefs_nickname_summ">The nickname to send tests bids with.</string>
+    <string name="prefs_nickname_summ">El sobrenombre a usar para enviar bids</string>
     <string name="prefs_nickname_tittle">Sobrenombre</string>
     <string name="toast_coming_soon">Pronto…</string>
     <string name="search_settings">Buscar</string>
@@ -75,4 +75,19 @@
     <string name="check_remaining_bids">Sincronizar Bids Disponibles</string>
     <string name="toast_logging_out">Cerrando sesión...</string>
     <string name="toast_getting_bids">Obteniendo bids disponibles...</string>
+    <string name="card_number">Card Number</string>
+    <string name="carrier">Carrier</string>
+    <string name="cardholder_name">Cardholder\'s Name</string>
+    <string name="phone_number">Número de Teléfono</string>
+    <string name="buy_with_card">Comprar con Tarjeta de Crédito</string>
+    <string name="buy_with_msisdn">Comprar con Línea Telefónica</string>
+    <string name="label_owner">Tarjetabiente</string>
+    <string name="pack1_text">250 Bids \n $4,99</string>
+    <string name="pack2_text">650 Bids \n $9,99</string>
+    <string name="pack3_text">Nuestro mejor paquete: \n 250 Bids semanales por solo $4,99/dia. \n ¡SUSCRIBETE AHORA!!</string>
+    <string name="select_bid_pack">Seleccione un paquete de ofertas</string>
+    <string name="select_payment_method">Seleccione un método de pago</string>
+    <string name="valid_thru">Válido hasta</string>
+    <string name="carrier_prompt">Seleccione su operador</string>
+    <string name="toast_missing_api_call">Missing Cable and Wireless API implementation.</string>
 </resources>

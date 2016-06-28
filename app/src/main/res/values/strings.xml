@@ -114,7 +114,33 @@
     <string name="prefs_email_key" translatable="false">client_email</string>
     <string name="prefs_remaining_bids_key" translatable="false">remaining_bids</string>
     <string name="check_remaining_bids">Sync Remaining Bids</string>
-    <string name="toast_logging_out">Logging you out...</string>
-    <string name="toast_getting_bids">Getting available bids...</string>
+    <string name="toast_logging_out">Logging you out…</string>
+    <string name="toast_getting_bids">Getting available bids…</string>
+    <string name="select_bid_pack">Select Bid Pack</string>
+    <string name="buy_with_card">Buy with Credit Card</string>
+    <string name="buy_with_msisdn">Buy with Phone Number</string>
+    <string name="select_payment_method">Select Payment Method</string>
+
+    <string name="pack1_text">250 Bids \n $4,99</string>
+    <string name="pack2_text">650 Bids \n $9,99</string>
+    <string name="pack3_text">Our best package: \n 250 Weekly Bids for just $4,99/day. \n SUBSCRIBE NOW!</string>
+
+    <string name="label_owner">Cardholder</string>
+    <string name="valid_thru">Good Thru</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="card_number">Card Number</string>
+    <string name="carrier">Carrier</string>
+    <string name="cardholder_name">Cardholder\'s Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="carrier_prompt">Select your carrier</string>
+    <string name="toast_missing_api_call">Missing Cable and Wireless API implementation.</string>
+
+
+    <string-array name="carriers_array">
+        <item>Movistar</item>
+        <item>Cable Wireless</item>
+    </string-array>
 
 </resources>

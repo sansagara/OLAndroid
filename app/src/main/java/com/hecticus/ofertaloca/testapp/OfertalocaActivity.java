@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import fragments.Auctions;
 import fragments.BuyBids;
+import fragments.BuyCreditCard;
+import fragments.BuyMSISDN;
 import fragments.Help;
 import fragments.History;
 import fragments.MyOrders;
@@ -35,6 +37,7 @@ public class OfertalocaActivity extends AppCompatActivity {
     public int userID;
     public int remainingBids;
     TextView dr_bids;
+    String checkedPackID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,25 +140,25 @@ public class OfertalocaActivity extends AppCompatActivity {
                 case R.id.auctions:
                     fragmentoGenerico = new Auctions();
                     break;
-                    case R.id.buy_bids:
-                        fragmentoGenerico = new BuyBids();
-                        break;
-                    case R.id.my_orders:
-                        fragmentoGenerico = new MyOrders();
-                        break;
-                    case R.id.bid_history:
-                        fragmentoGenerico = new History();
-                        break;
-                    case R.id.settings:
-                        startActivity(new Intent(this, PreferencesActivity.class));
-                        break;
-                    case R.id.help:
-                        fragmentoGenerico = new Help();
-                        break;
-                    case R.id.logout:
-                        Toast.makeText(getApplicationContext(), getString(R.string.toast_logging_out), Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(this, HomeActivity.class));
-                        break;
+                case R.id.buy_bids:
+                    fragmentoGenerico = new BuyBids();
+                    break;
+                case R.id.my_orders:
+                    fragmentoGenerico = new MyOrders();
+                    break;
+                case R.id.bid_history:
+                    fragmentoGenerico = new History();
+                    break;
+                case R.id.settings:
+                    startActivity(new Intent(this, PreferencesActivity.class));
+                    break;
+                case R.id.help:
+                    fragmentoGenerico = new Help();
+                    break;
+                case R.id.logout:
+                    Toast.makeText(getApplicationContext(), getString(R.string.toast_logging_out), Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(this, HomeActivity.class));
+                    break;
             }
         }
 
@@ -219,6 +222,77 @@ public class OfertalocaActivity extends AppCompatActivity {
 
     public void updateDrawer() {
         dr_bids.setText(String.format(getString(R.string.drawer_remaining_bids), remainingBids));
+    }
+
+
+
+    // -----------------
+    // BUY BIDS FRAGMENT
+    // -----------------
+
+
+    //Select the pack.
+    //Gets the packnum by tag
+    public void selectPack(View pack) {
+        String packNum = String.valueOf(pack.getTag());
+        Toast.makeText(getApplicationContext(), "Pack: " + packNum, Toast.LENGTH_SHORT).show();
+
+        if (checkedPackID != null) {
+            //The packID the user selected...
+            String prevCheckedPackID = checkedPackID;
+            checkedPackID = "drawable_check" + packNum;
+
+            //put new check.
+            TextView check_draw = (TextView) findViewById(getResources().getIdentifier(checkedPackID, "id", getPackageName()));
+            check_draw.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_check_circle_white_24dp, 0, 0, 0);
+            check_draw.getLayoutParams().height = 100;
+
+            if (!checkedPackID.equals(prevCheckedPackID)) {
+                //remove old check.
+                TextView prev_check_draw = (TextView) findViewById(getResources().getIdentifier(prevCheckedPackID, "id", getPackageName()));
+                prev_check_draw.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                prev_check_draw.getLayoutParams().height = 0;
+            }
+
+        } else {
+            //put new check.
+            checkedPackID = "drawable_check" + packNum;
+            TextView check_draw = (TextView) findViewById(getResources().getIdentifier(checkedPackID, "id", getPackageName()));
+            check_draw.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_check_circle_white_24dp, 0, 0, 0);
+            check_draw.getLayoutParams().height = 100;
+        }
+    }
+
+    //Buy pack
+    //Gets the payment type by tag.
+    //0 -> MSISDN
+    //1 -> Credit Card
+    public void buyPack(View method) {
+        Fragment fragmentoGenerico = null;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        Integer payMethod = Integer.parseInt(String.valueOf(method.getTag()));
+
+        if (payMethod == 0) {
+            Toast.makeText(getApplicationContext(), "Payment method: MSISDN ", Toast.LENGTH_SHORT).show();
+            //Check if already subscribed.
+
+            //Change fragment to MSISDN.
+            fragmentoGenerico = new BuyMSISDN();
+        } else if (payMethod == 1) {
+            Toast.makeText(getApplicationContext(), "Payment method: CreditCard" , Toast.LENGTH_SHORT).show();
+            //Check if credit card already registered.
+
+            //Change fragment to credit card.
+            fragmentoGenerico = new BuyCreditCard();
+        }
+
+        //Commit new Fragment
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.contenedor_principal, fragmentoGenerico)
+                .commit();
+
     }
 
 }

@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,16 +34,15 @@ public class Auctions extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d("FRAG1","onCreateView called");
         View view = inflater.inflate(R.layout.content_ofertaloca_pager, container, false);
+        insertarTabs(container);
 
-        if (savedInstanceState == null) {
-            insertarTabs(container);
+        // Setear adaptador al viewpager.
+        viewPager = (ViewPager) view.findViewById(R.id.pager);
+        setupViewPager(viewPager);
+        pestanas.setupWithViewPager(viewPager);
 
-            // Setear adaptador al viewpager.
-            viewPager = (ViewPager) view.findViewById(R.id.pager);
-            setupViewPager(viewPager);
-            pestanas.setupWithViewPager(viewPager);
-        }
 
         return view;
     }
@@ -63,7 +63,7 @@ public class Auctions extends Fragment {
 
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
 
         adapter.addFragment(new AllAuctions(), getString(R.string.tab1));
         adapter.addFragment(new OpenAuctions(), getString(R.string.tab2));
@@ -73,13 +73,6 @@ public class Auctions extends Fragment {
         */
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(3);
-    }
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        appBar.removeView(pestanas);
     }
 
 
@@ -112,5 +105,11 @@ public class Auctions extends Fragment {
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        appBar.removeView(pestanas);
+        viewPager.removeAllViews();
+    }
 
 }

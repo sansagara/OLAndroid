@@ -238,14 +238,15 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
         TableLayout tl = (TableLayout) findViewById(R.id.bidHistory);
 
         TableRow htr = new TableRow(this);
+        htr.setGravity(Gravity.CENTER_HORIZONTAL);
         TextView hnick = new TextView(this);
-        hnick.setText("Nickn");
+        hnick.setText("Usuario");
         hnick.setTypeface(null, Typeface.BOLD);
         hnick.setGravity(Gravity.CENTER);
         htr.addView(hnick);
 
         TextView hacum = new TextView(this);
-        hacum.setText("Accum");
+        hacum.setText("Oferta");
         hacum.setTypeface(null, Typeface.BOLD);
         hacum.setGravity(Gravity.CENTER);
         htr.addView(hacum);
@@ -265,22 +266,25 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
         for (Bid bid : bids) {
             TableRow tr = new TableRow(this);
             if (i%2 == 0) {
-                tr.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.gray));
+                tr.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.bgBlue));
             }
             TextView nick = new TextView(this);
             nick.setText(bid.getClient());
-            nick.setGravity(Gravity.CENTER);
+            nick.setTypeface(null, Typeface.BOLD);
+            nick.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.boldTextBlue));
+            nick.setPadding(150, 0, 0, 0);
             tr.addView(nick);
 
 
             TextView acum = new TextView(this);
             acum.setText( df.format( bid.getAccumulated() ) );
-            nick.setGravity(Gravity.CENTER);
+            acum.setGravity(Gravity.CENTER);
+            acum.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.textBlue));
             tr.addView(acum);
 
             TextView val = new TextView(this);
             val.setText( df.format( bid.getValue() ) );
-            nick.setGravity(Gravity.CENTER);
+            val.setGravity(Gravity.CENTER);
             tr.addView(val);
 
             tl.addView(tr);
