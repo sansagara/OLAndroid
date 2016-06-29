@@ -4,6 +4,8 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
@@ -14,11 +16,15 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
 
 import fragments.Auctions;
 import fragments.BuyBids;
@@ -36,6 +42,7 @@ public class OfertalocaActivity extends AppCompatActivity {
     private MenuItem drawerSelected;
     public int userID;
     public int remainingBids;
+    public String profilePic;
     TextView dr_bids;
     String checkedPackID;
 
@@ -50,6 +57,7 @@ public class OfertalocaActivity extends AppCompatActivity {
         final String regID = prefs.getString(getString(R.string.prefs_registration_id_key), "");
         final String email = prefs.getString(getString(R.string.prefs_email_key), "cliente@ofertaloca.com");
         remainingBids = prefs.getInt(getString(R.string.prefs_remaining_bids_key), 0);
+        profilePic = prefs.getString(getString(R.string.prefs_user_profile_pic), "");
         Toast.makeText(getApplicationContext(), "userID: " + userID + " nickname: " + nickname + " regID: " + regID, Toast.LENGTH_SHORT).show();
 
         if (userID == 0) {
@@ -59,32 +67,42 @@ public class OfertalocaActivity extends AppCompatActivity {
             finish();
         }
 
-        //Fill layout
+        //Fill layout.
         setContentView(R.layout.activity_ofertaloca);
 
-        //Toolbar
+        //Toolbar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //Drawer
+        //Drawer.
         initNavigationDrawer(email, remainingBids);
 
     }
 
     // -----------------
-    // NAVIGATION DRAWER
+    // NAVIGATION DRAWER.
     // -----------------
 
     public void initNavigationDrawer(String email, int remainingBids) {
         final NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         if (navigationView != null) {
 
-            //Style Navigation Drawer
+            //Style Navigation Drawer.
             View header = navigationView.getHeaderView(0);
             TextView dr_email = (TextView) header.findViewById(R.id.drawer_email);
             dr_bids = (TextView) header.findViewById(R.id.drawer_remaining_bids);
+
             dr_email.setText(email);
             dr_bids.setText(String.format(getString(R.string.drawer_remaining_bids), remainingBids));
+
+            //Set Profile Picture in NavBar. (From path stored in SharedPrefs).
+            File imgFile = new File(profilePic);
+            if (!profilePic.isEmpty() && imgFile.exists()) {
+                Log.d("PROFILE", "ImagePref is not empty and file exists!");
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                ImageView circleView = (ImageView) header.findViewById(R.id.circleView);
+                circleView.setImageBitmap(myBitmap);
+            }
 
             //Setup Some more stuff.
             drawerToggle();
@@ -121,6 +139,7 @@ public class OfertalocaActivity extends AppCompatActivity {
             new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(MenuItem menuItem) {
+
                     menuItem.setChecked(true);
                     seleccionarItem(menuItem);
                     drawerLayout.closeDrawers();
@@ -293,6 +312,11 @@ public class OfertalocaActivity extends AppCompatActivity {
                 .replace(R.id.contenedor_principal, fragmentoGenerico)
                 .commit();
 
+    }
+
+    //Change Profile Picture of the user.
+    public void changeProfilePic(View method) {
+        startActivity(new Intent(this, UploadActivity.class));
     }
 
 }

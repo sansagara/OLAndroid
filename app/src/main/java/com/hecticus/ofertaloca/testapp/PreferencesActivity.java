@@ -31,7 +31,7 @@ public class PreferencesActivity extends AppCompatActivity {
     //Go back in the toolbar.
     public boolean onOptionsItemSelected(MenuItem item){
         Intent myIntent = new Intent(getApplicationContext(), OfertalocaActivity.class);
-        startActivityForResult(myIntent, 0);
+        startActivity(myIntent);
         finish();
         return true;
     }

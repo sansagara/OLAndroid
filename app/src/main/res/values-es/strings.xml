@@ -89,5 +89,11 @@
     <string name="select_payment_method">Seleccione un método de pago</string>
     <string name="valid_thru">Válido hasta</string>
     <string name="carrier_prompt">Seleccione su operador</string>
-    <string name="toast_missing_api_call">Missing Cable and Wireless API implementation.</string>
+    <string name="toast_missing_api_call">Falta la implementación de API de Cable and Wireless .</string>
+    <string name="push_message_received">Mensaje PUSH recibido:</string>
+    <string name="btnUploadToServer">Upload to Server</string>
+    <string name="toast_profile_pic_loaded">¡Foto de perfil cargada!</string>
+    <string name="uploadProfilePic_toolbar_title">Subir foto de perfil</string>
+    <string name="settingsActivity_toolbar_title">Ajustes</string>
+    <string name="hello_blank_fragment">Hola fragmento vacio!! :-D</string>
 </resources>

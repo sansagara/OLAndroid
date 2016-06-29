@@ -19,6 +19,6 @@ public class NotificationActivity extends AppCompatActivity {
         textView = (TextView) findViewById(R.id.textView);
         Intent intent = NotificationActivity.this.getIntent();
         String data = intent.getStringExtra("data");
-        textView.setText("Your GCM data is: "+data);
+        textView.setText(getApplicationContext().getText(R.string.push_message_received) + data );
     }
 }

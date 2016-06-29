@@ -54,7 +54,7 @@
                     android:layout_height="150dp"
                     android:layout_centerHorizontal="true"
                     android:id="@+id/auctionProductImage"
-                    android:src="@drawable/home_iphone"
+                    android:src="@drawable/no_product_image"
                     android:layout_below="@+id/auctionProductName"
                     android:contentDescription="@string/main_product_image" />
 

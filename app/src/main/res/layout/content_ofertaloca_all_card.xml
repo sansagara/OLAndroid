@@ -25,8 +25,10 @@
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/home_iphone"
-                android:id="@+id/productImage" />
+                android:src="@drawable/no_product_image"
+                android:id="@+id/productImage"
+                android:contentDescription="Product Image"
+                android:padding="5dp" />
 
             <TextView
                 android:id="@+id/title"
@@ -85,7 +87,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="100$"
-                        android:layout_below="@id/time_remaining"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/priceBoxPrice"
                         android:layout_gravity="center_horizontal"
@@ -106,6 +107,7 @@
         android:src="@drawable/padlock"
         app:layout_anchor="@id/CardView"
         app:layout_anchorGravity="top|start"
-        android:elevation="3dp" />
+        android:elevation="3dp"
+        android:contentDescription="Status indicator" />
 
 </RelativeLayout>
