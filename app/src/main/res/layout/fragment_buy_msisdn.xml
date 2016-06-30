@@ -32,7 +32,9 @@
                 android:inputType="textCapCharacters"
                 android:background="@drawable/edittext_light"
                 android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"/>
+                android:layout_marginLeft="20dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -50,6 +52,8 @@
                 android:layout_height="40dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:entries="@array/carriers_array"
                 android:prompt="@string/carrier_prompt" />
 

@@ -142,6 +142,7 @@
     <string name="toast_profile_pic_loaded">Profile Pic Loaded!</string>
     <string name="uploadProfilePic_toolbar_title">Upload Profile Pic</string>
     <string name="settingsActivity_toolbar_title">Settings</string>
+    <string name="prefs_push_enabled">push_enabled</string>
 
 
     <string-array name="carriers_array">

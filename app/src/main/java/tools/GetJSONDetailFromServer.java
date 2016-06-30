@@ -123,6 +123,7 @@ public class GetJSONDetailFromServer extends AsyncTask<String,String,String> {
                 int id = auction_data.getInt("id_auction");
                 int status = auction_data.getInt("status");
                 int remaining_time = auction_data.getInt("time_remaining");
+                double last_bid = auction_data.getDouble("last_bid");
                 if (!auction_data.isNull("accumulated_price")) {
                     accumulated_price = auction_data.getDouble("accumulated_price");
                 } else {
@@ -144,7 +145,7 @@ public class GetJSONDetailFromServer extends AsyncTask<String,String,String> {
                     }
                 }
                 //Create Auction (and Product) objects.
-                Auction auction_detail = new Auction(product_name, product_description, product_market_price, product_image_url, id, status, remaining_time, accumulated_price, bids_list, product_description_url);
+                Auction auction_detail = new Auction(product_name, product_description, product_market_price, product_image_url, id, status, remaining_time, accumulated_price, bids_list, product_description_url, last_bid);
 
                 //Return the Auction Detail.
                 delegate.processFinish(auction_detail);

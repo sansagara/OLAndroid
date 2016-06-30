@@ -55,7 +55,7 @@ public class Auction extends Product {
     }
 
     //Constructor including Product data, bids list and product_description_url
-    public Auction(String product_name, String product_description, double product_market_price, String product_image_url, int auction_id, int auction_status, int auction_remaining_time, double auction_accumulated_price, List<Bid> bids_list, String description_path) {
+    public Auction(String product_name, String product_description, double product_market_price, String product_image_url, int auction_id, int auction_status, int auction_remaining_time, double auction_accumulated_price, List<Bid> bids_list, String description_path, double last_bid) {
 
         //Create Product.
         super(product_name, product_description, product_market_price, product_image_url);
@@ -66,6 +66,7 @@ public class Auction extends Product {
         this.accumulated_price = auction_accumulated_price;
         this.bids = bids_list;
         this.description_path = description_path;
+        this.last_bid = last_bid;
 
     }
 

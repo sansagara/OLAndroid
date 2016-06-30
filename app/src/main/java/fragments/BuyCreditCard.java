@@ -43,20 +43,6 @@ public class BuyCreditCard extends Fragment {
 
         cardIsFront = true;
 
-        CardHolder.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!cardIsFront) {
-                    creditCardView.flipToFront();
-                    cardIsFront = true;
-                }
-                if (!hasFocus) {
-                    creditCardView.chooseFlag(IssuerCode.VISACREDITO);
-                    creditCardView.setTextOwner(CardHolder.getText());
-                }
-            }
-        });
-
         CardNumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -66,6 +52,31 @@ public class BuyCreditCard extends Fragment {
                 }
                 if (!hasFocus) {
                     creditCardView.setTextNumber(CardNumber.getText());
+                    if (CardNumber.getText().length() > 4) {
+                        String checkVisa = CardNumber.getText().toString();
+                        if (checkVisa.substring(0,3).equals("413") || checkVisa.substring(0,3).equals("416")) {
+                            creditCardView.chooseFlag(IssuerCode.VISACREDITO);
+                        } else if (checkVisa.substring(0,3).equals("419")) {
+                            creditCardView.chooseFlag(IssuerCode.VISAELECTRON);
+                        } else if (checkVisa.substring(0,2).equals("51") || checkVisa.substring(0,2).equals("55")) {
+                            creditCardView.chooseFlag(IssuerCode.MASTERCARD);
+                        } else {
+                            creditCardView.chooseFlag(IssuerCode.OTHER);
+                        }
+                    }
+                }
+            }
+        });
+
+        CardHolder.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!cardIsFront) {
+                    creditCardView.flipToFront();
+                    cardIsFront = true;
+                }
+                if (!hasFocus) {
+                    creditCardView.setTextOwner(CardHolder.getText());
                 }
             }
         });

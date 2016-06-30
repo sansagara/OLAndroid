@@ -222,20 +222,12 @@ public class OfertalocaActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(OfertalocaActivity.this, PreferencesActivity.class));
-            return true;
-        } else if (id == R.id.action_search) {
+
+        if (id == R.id.action_search) {
             Toast.makeText(getApplicationContext(), getString(R.string.toast_coming_soon), Toast.LENGTH_SHORT).show();
             //handleMenuSearch();
             return true;
-        } else if (id == R.id.action_user) {
-            Toast.makeText(getApplicationContext(), getString(R.string.toast_taking_to_login), Toast.LENGTH_SHORT).show();
-            OfertalocaActivity.this.startActivity(new Intent(OfertalocaActivity.this, HomeActivity.class));
-            finish();
         }
-
         return super.onOptionsItemSelected(item);
     }
 

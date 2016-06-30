@@ -1,6 +1,5 @@
 package com.hecticus.ofertaloca.testapp;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -17,6 +16,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -33,6 +33,7 @@ import java.util.List;
 import tools.AsyncResponseDetail;
 import tools.Auction;
 import tools.Bid;
+import tools.DownloadImageTask;
 import tools.GetJSONDetailFromServer;
 import tools.SendBidToServer;
 
@@ -131,7 +132,6 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
         remainingBids.setText(remainingBidsFinal);
 
         //Format Current price and buy now..
-
         currentPrice.setText("0.0");
         String buyNowPrev = getResources().getString(R.string.auction_buynowbutton_text);
         String buyNowFinal = String.format(buyNowPrev, 0.0 );
@@ -152,8 +152,7 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
 
     //Go back in the toolbar.
     public boolean onOptionsItemSelected(MenuItem item){
-        Intent myIntent = new Intent(getApplicationContext(), OfertalocaActivity.class);
-        startActivityForResult(myIntent, 0);
+        finish();
         return true;
     }
 
@@ -171,9 +170,15 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
         final TextView remainingTime = (TextView) findViewById(R.id.remainingTime);
         TextView remainingBids = (TextView) findViewById(R.id.remainingBids);
         Button buyNow = (Button) findViewById(R.id.auction_buynow_button);
+        ImageView productImage = (ImageView) findViewById(R.id.auctionProductImage);
+
+        //Set product Image.
+        if (auction_detail.getImage_url() != null) {
+            new DownloadImageTask(productImage).execute(auction_detail.getImage_url());
+        }
 
         //Current price and remaining time.
-        currentPrice.setText(auction_detail.getLast_bid().toString());
+        currentPrice.setText(df.format(auction_detail.getLast_bid()).toString());
 
         //Handler for timer.
         final Handler aHandler = new Handler();

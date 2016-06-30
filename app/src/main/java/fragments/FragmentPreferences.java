@@ -3,6 +3,7 @@ package fragments;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.PreferenceFragment;
+import android.preference.SwitchPreference;
 import android.text.method.TextKeyListener;
 
 import com.hecticus.ofertaloca.testapp.R;
@@ -12,6 +13,7 @@ import com.hecticus.ofertaloca.testapp.R;
  * Fragment to show the ol_preferences.xml Preferences screen.
  */
 public class FragmentPreferences extends PreferenceFragment {
+    SwitchPreference pushEnabled;
 
     public FragmentPreferences() {
     }
@@ -30,6 +32,8 @@ public class FragmentPreferences extends PreferenceFragment {
 
         EditTextPreference redID = (EditTextPreference) findPreference(getString(R.string.prefs_registration_id_key));
         redID.getEditText().setKeyListener(TextKeyListener.getInstance());
+
+        pushEnabled = (SwitchPreference) findPreference(getString(R.string.prefs_push_enabled));
 
     }
 
