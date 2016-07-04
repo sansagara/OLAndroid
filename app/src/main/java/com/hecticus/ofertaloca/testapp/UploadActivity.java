@@ -72,6 +72,7 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
         File imgFile = new File(profilePic);
         if (!profilePic.isEmpty() && imgFile.exists()) {
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            imgPreview.setBackgroundResource(0);
             imgPreview.setImageBitmap(myBitmap);
         }
 
@@ -169,10 +170,14 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
             MediaStore.Images.Media.insertImage(getContentResolver(),
                     file.getAbsolutePath(), file.getName(), file.getName());
             Toast.makeText(context, context.getString(R.string.toast_profile_pic_loaded), Toast.LENGTH_SHORT).show();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        //Update pic in OfertaLocaActivity
+        OfertalocaActivity  oal = new OfertalocaActivity();
+        oal.updateProfilePicPath(file.getAbsolutePath());
     }
 
 
@@ -206,6 +211,8 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
             imgPreview.setVisibility(View.GONE);
         }
     }
+
+
 
     /**
      * Uploading the file to server

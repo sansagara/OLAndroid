@@ -45,6 +45,8 @@ public class OfertalocaActivity extends AppCompatActivity {
     public String profilePic;
     TextView dr_bids;
     String checkedPackID;
+    View header;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +78,15 @@ public class OfertalocaActivity extends AppCompatActivity {
 
         //Drawer.
         initNavigationDrawer(email, remainingBids);
+    }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Set the profile pic in the draawer again (Now with an updated path).
+        setProfileinDrawer();
+        setRemainingBids();
     }
 
     // -----------------
@@ -88,21 +98,17 @@ public class OfertalocaActivity extends AppCompatActivity {
         if (navigationView != null) {
 
             //Style Navigation Drawer.
-            View header = navigationView.getHeaderView(0);
+            header = navigationView.getHeaderView(0);
             TextView dr_email = (TextView) header.findViewById(R.id.drawer_email);
             dr_bids = (TextView) header.findViewById(R.id.drawer_remaining_bids);
 
             dr_email.setText(email);
-            dr_bids.setText(String.format(getString(R.string.drawer_remaining_bids), remainingBids));
 
-            //Set Profile Picture in NavBar. (From path stored in SharedPrefs).
-            File imgFile = new File(profilePic);
-            if (!profilePic.isEmpty() && imgFile.exists()) {
-                Log.d("PROFILE", "ImagePref is not empty and file exists!");
-                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                ImageView circleView = (ImageView) header.findViewById(R.id.circleView);
-                circleView.setImageBitmap(myBitmap);
-            }
+            //Call remaining_bids set.
+            setRemainingBids();
+
+            //Call profile_pic set.
+            setProfileinDrawer();
 
             //Setup Some more stuff.
             drawerToggle();
@@ -112,7 +118,6 @@ public class OfertalocaActivity extends AppCompatActivity {
             drawerSelected = navigationView.getMenu().getItem(0);
 
         }
-
     }
 
     public void drawerToggle() {
@@ -187,15 +192,14 @@ public class OfertalocaActivity extends AppCompatActivity {
                     .replace(R.id.contenedor_principal, fragmentoGenerico)
                     .commit();
         }
-
-        // Setear título actual
+        //  Set title in toolbar for fragments.
         setTitle(itemDrawer.getTitle());
     }
 
 
-    //
+    // -------------
     // TOOLBAR MENU
-    //
+    // -------------
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -241,9 +245,8 @@ public class OfertalocaActivity extends AppCompatActivity {
     // BUY BIDS FRAGMENT
     // -----------------
 
-
     //Select the pack.
-    //Gets the packnum by tag
+    //Gets the pack number (id) by tag
     public void selectPack(View pack) {
         String packNum = String.valueOf(pack.getTag());
         Toast.makeText(getApplicationContext(), "Pack: " + packNum, Toast.LENGTH_SHORT).show();
@@ -306,9 +309,54 @@ public class OfertalocaActivity extends AppCompatActivity {
 
     }
 
-    //Change Profile Picture of the user.
+
+    //------------------
+    // PROFILE_PIC UPLOAD
+    //--------------------
+
+
+    /*
+    * Set (and update) profile pic in drawer.
+    * @params: picPath. The path to the profile pic drawable.
+    */
+    public void setProfileinDrawer(){
+        //Set Profile Picture in NavBar. (From path stored in SharedPrefs).
+        File imgFile = new File(profilePic);
+        if (!profilePic.isEmpty() && imgFile.exists()) {
+            Log.d("PROFILE", "ImagePref is not empty and file exists!");
+            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            ImageView circleView = (ImageView) header.findViewById(R.id.circleView);
+            circleView.setImageBitmap(myBitmap);
+        }
+    }
+
+
+    //Update path of profile picture if coming from another activity.
+    public void updateProfilePicPath(String path){
+        this.profilePic = path;
+    }
+
+    //Call activity to change Profile Picture of the user.
     public void changeProfilePic(View method) {
         startActivity(new Intent(this, UploadActivity.class));
+    }
+
+
+
+
+    //------------------
+    // REMAINING BIDS
+    //--------------------
+
+    //Update path of profile picture if coming from another activity.
+    public void updateRemainingBids(int bids){
+        this.remainingBids = bids;
+    }
+
+    //Update textview in drawer.
+    public void setRemainingBids(){
+        dr_bids.setText(String.format(getString(R.string.drawer_remaining_bids), remainingBids));
+
     }
 
 }

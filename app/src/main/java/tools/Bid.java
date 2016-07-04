@@ -10,13 +10,15 @@ public class Bid  {
     protected String client;
     protected double accumulated;
     protected double value;
+    protected String pic_path;
 
     //Default constructor
-    public Bid(String client, double accumulated, double value) {
+    public Bid(String client, double accumulated, double value, String pic_path) {
 
         this.client = client;
         this.accumulated = accumulated;
         this.value = value;
+        this.pic_path = pic_path;
 
     }
 
@@ -31,6 +33,10 @@ public class Bid  {
 
     public double getValue() {
         return value;
+    }
+
+    public String getPic_path(){
+        return pic_path;
     }
 
 }

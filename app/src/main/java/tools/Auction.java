@@ -11,7 +11,7 @@ import java.util.List;
 public class Auction extends Product {
     protected int id;
     protected int status;
-    protected int remaining_time = 1;
+    protected int remaining_time = 20;
     protected double accumulated_price;
     protected double list_price = 10.0;
     protected double last_bid;
@@ -85,7 +85,7 @@ public class Auction extends Product {
     public Double getAccumulated_price() {
         return accumulated_price;
     }
-    public Double getLast_bid() {
+    public Double getLastBid() {
         return last_bid;
     }
     public List<Bid> getBids() {
@@ -94,4 +94,11 @@ public class Auction extends Product {
     public String getDescriptionPath() {
         return description_path;
     }
+    public String getLastUser() {
+        return bids.get(0).getClient();
+    }
+    public String getLastUserPic() {
+        return bids.get(0).getPic_path();
+    }
+
 }

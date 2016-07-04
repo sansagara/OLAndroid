@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,7 +46,7 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
     int userID;
     String product_name;
     int auction_id;
-
+    boolean table_filled = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +93,6 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
             public void onClick(View v) {
                 if (remBids > 0) {
                     SendBid(auction_id, userID, 0, false, product_name);
-                    if (remBids > 0) {remBids--;}
                 } else {
                     Toast.makeText(getApplicationContext(), "You don't have enough bids.", Toast.LENGTH_SHORT).show();
                 }
@@ -160,6 +160,8 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
     @Override  //this override the implemented method from asyncTask
     public void processFinish(Auction auction_detail) {
 
+        Log.d("DEL", "processFinish: CALLED");
+
         //Decimal formatting (2 digits)
         DecimalFormat df = new DecimalFormat("#.##");
         df.setRoundingMode(RoundingMode.CEILING);
@@ -171,6 +173,8 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
         TextView remainingBids = (TextView) findViewById(R.id.remainingBids);
         Button buyNow = (Button) findViewById(R.id.auction_buynow_button);
         ImageView productImage = (ImageView) findViewById(R.id.auctionProductImage);
+        TextView maxPerfUser = (TextView) findViewById(R.id.auction_user_maxperformance);
+        ImageView maxPerfUserPic = (ImageView) findViewById(R.id.imageView3);
 
         //Set product Image.
         if (auction_detail.getImage_url() != null) {
@@ -178,7 +182,7 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
         }
 
         //Current price and remaining time.
-        currentPrice.setText(df.format(auction_detail.getLast_bid()).toString());
+        currentPrice.setText(df.format(auction_detail.getAccumulated_price()).toString());
 
         //Handler for timer.
         final Handler aHandler = new Handler();
@@ -215,13 +219,20 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
         String buyNowFinal = String.format(buyNowPrev, df.format( auction_detail.getMarket_price() ) );
         buyNow.setText(buyNowFinal);
 
+
+        //Max Performing User (Right now it shows the Last Bidding user).
+        maxPerfUser.setText( auction_detail.getLastUser() );
+        if (auction_detail.getLastUserPic() != null) {
+            new DownloadImageTask(maxPerfUserPic).execute(auction_detail.getLastUserPic());
+        }
+
         //If bids is null..
         List<Bid> bids;
         if (auction_detail.getBids() == null) {
             //Bid History Table
             bids = new ArrayList<>();
             for (int i = 0; i < 10; ++i) {
-                bids.add(new Bid("Nickname" + i+1, i+1000, i+2500));
+                bids.add(new Bid("Nickname" + i+1, i+1000, i+2500, null));
             }
         } else {
             bids = auction_detail.getBids();
@@ -241,6 +252,10 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
     private void createBidHistoryTable(List<Bid> bids) {
 
         TableLayout tl = (TableLayout) findViewById(R.id.bidHistory);
+
+        if (table_filled) {
+            tl.removeAllViews();
+        }
 
         TableRow htr = new TableRow(this);
         htr.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -296,6 +311,7 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
             i++;
         }
 
+        table_filled = true;
     }
 
 
@@ -318,8 +334,22 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
         } else {
             Toast.makeText(getApplicationContext(), getString(R.string.toast_biddingscheduled) + productName + ". clientID: " + ClientID, Toast.LENGTH_SHORT).show();
         }
+
         //call to async class
-        new SendBidToServer(getApplicationContext(), isScheduled, AuctionID, ClientID ).execute(String.valueOf(bidDataJSON));
+        SendBidToServer asyncTask = new SendBidToServer(getApplicationContext(), isScheduled, AuctionID, ClientID );
+        asyncTask.delegate = this;
+        asyncTask.execute(String.valueOf(bidDataJSON));
+
+        //Substract remaining bids to shared Preferences.
+        //Update pic in OfertaLocaActivity
+        this.remBids = remBids -1;
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(getApplicationContext().getString(R.string.prefs_remaining_bids_key), remBids);
+        editor.apply();
+
+        OfertalocaActivity  oal = new OfertalocaActivity();
+        oal.updateRemainingBids(remBids -1);
 
     } // End CreateClient Method
 

@@ -141,7 +141,8 @@ public class GetJSONDetailFromServer extends AsyncTask<String,String,String> {
                         String nickname = bid.getString("client");
                         double accumulated = bid.getDouble("accumulated");
                         double value = bid.getDouble("value");
-                        bids_list.add(new Bid(nickname, accumulated, value));
+                        String pic_path = bid.getString("path_to_pic");
+                        bids_list.add(new Bid(nickname, accumulated, value, pic_path));
                     }
                 }
                 //Create Auction (and Product) objects.

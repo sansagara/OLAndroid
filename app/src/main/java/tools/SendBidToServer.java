@@ -3,7 +3,6 @@ package tools;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.hecticus.ofertaloca.testapp.R;
 
@@ -149,7 +148,7 @@ public class SendBidToServer extends AsyncTask<String,String,String> {
         if (response != null) {
 
             Log.d("REST", "Post Executed: " + response);
-            Toast.makeText(context, "Post Executed: " + response, Toast.LENGTH_LONG).show();
+            //Toast.makeText(context, "Post Executed: " + response, Toast.LENGTH_LONG).show();
 
             try {
                 //Parse response as JSON.
@@ -167,31 +166,51 @@ public class SendBidToServer extends AsyncTask<String,String,String> {
                 //Get response object node from JSON.
                 JSONObject auction_data = JSONResponse.getJSONObject("response");
 
+                double product_market_price;
+                double accumulated_price;
+
                 //Product attributes
                 String product_name = auction_data.getString("product_name");
                 String product_description = auction_data.getString("product_description");
-                double product_market_price = auction_data.getDouble("market_price");
+
+                if (!auction_data.isNull("market_price")) {
+                    product_market_price = auction_data.getDouble("market_price");
+                } else {
+                    product_market_price = 0.00;
+                }
+
                 String product_image_url = auction_data.getJSONArray("product_images").getJSONObject(0).getString("url");
+                String product_description_url = auction_data.getString("path_description");
 
                 //Auction attributes.
                 int id = auction_data.getInt("id_auction");
                 int status = auction_data.getInt("status");
                 int remaining_time = auction_data.getInt("time_remaining");
-                double accumulated_price = auction_data.getDouble("accumulated_price");
+                double last_bid = auction_data.getDouble("last_bid");
+                if (!auction_data.isNull("accumulated_price")) {
+                    accumulated_price = auction_data.getDouble("accumulated_price");
+                } else {
+                    accumulated_price = 0.00;
+                }
 
                 //Get Bids for history!.
-                JSONArray bids = JSONResponse.getJSONArray("bids_list");
                 ArrayList<Bid> bids_list = new ArrayList<>();
-                for (int i = 0; i < bids.length(); ++i) {
-                    JSONObject bid = bids.getJSONObject(i);
-                    String nickname = auction_data.getString("client");
-                    double accumulated = auction_data.getDouble("accumulated");
-                    double value = auction_data.getDouble("value");
-                    bids_list.add(new Bid(nickname, accumulated, value));
+
+                if (!auction_data.isNull("bids_list")) {
+                    JSONArray bids = auction_data.getJSONArray("bids_list");
+
+                    for (int i = 0; i < bids.length(); ++i) {
+                        JSONObject bid = bids.getJSONObject(i);
+                        String nickname = bid.getString("client");
+                        double accumulated = bid.getDouble("accumulated");
+                        double value = bid.getDouble("value");
+                        String pic_path = bid.getString("path_to_pic");
+                        bids_list.add(new Bid(nickname, accumulated, value, pic_path));
+                    }
                 }
 
                 //Create Auction (and Product) objects.
-                Auction auction_detail = new Auction(product_name, product_description, product_market_price, product_image_url, id, status, remaining_time, accumulated_price, bids_list);
+                Auction auction_detail = new Auction(product_name, product_description, product_market_price, product_image_url, id, status, remaining_time, accumulated_price, bids_list, product_description_url, last_bid);
 
                 //Return the Auction Detail. This will re-draw the layout after the bid.
                 delegate.processFinish(auction_detail);
