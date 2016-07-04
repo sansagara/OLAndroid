@@ -95,10 +95,18 @@ public class Auction extends Product {
         return description_path;
     }
     public String getLastUser() {
-        return bids.get(0).getClient();
+        if (bids.size() > 0) {
+            return bids.get(0).getClient();
+        } else {
+            return null;
+        }
     }
     public String getLastUserPic() {
-        return bids.get(0).getPic_path();
+        if (bids.size() > 0) {
+            return bids.get(0).getPic_path();
+        } else {
+            return null;
+        }
     }
 
 }

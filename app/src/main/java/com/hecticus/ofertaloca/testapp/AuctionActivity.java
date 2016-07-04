@@ -220,22 +220,23 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
         buyNow.setText(buyNowFinal);
 
 
-        //Max Performing User (Right now it shows the Last Bidding user).
-        maxPerfUser.setText( auction_detail.getLastUser() );
-        if (auction_detail.getLastUserPic() != null) {
-            new DownloadImageTask(maxPerfUserPic).execute(auction_detail.getLastUserPic());
-        }
-
         //If bids is null..
         List<Bid> bids;
-        if (auction_detail.getBids() == null) {
+        if (auction_detail.getBids() == null || auction_detail.getBids().size() == 0 ) {
             //Bid History Table
             bids = new ArrayList<>();
-            for (int i = 0; i < 10; ++i) {
-                bids.add(new Bid("Nickname" + i+1, i+1000, i+2500, null));
-            }
+//            for (int i = 0; i < 10; ++i) {
+//                bids.add(new Bid("Nickname" + i+1, i+1000, i+2500, null));
+//            }
         } else {
+            //Max Performing User (Right now it shows the Last Bidding user).
+            maxPerfUser.setText( auction_detail.getLastUser() );
+            if (auction_detail.getLastUserPic() != null) {
+                new DownloadImageTask(maxPerfUserPic).execute(auction_detail.getLastUserPic());
+            }
+            //Create bids history table.
             bids = auction_detail.getBids();
+
         }
 
         //Method to create the bid history table.
