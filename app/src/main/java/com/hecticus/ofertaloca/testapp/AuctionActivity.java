@@ -13,6 +13,8 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -47,6 +49,8 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
     String product_name;
     int auction_id;
     boolean table_filled = false;
+    double prevAccumPrice;
+    Animation animationBounce;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,10 +185,15 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
             new DownloadImageTask(productImage).execute(auction_detail.getImage_url());
         }
 
-        //Current price and remaining time.
-        currentPrice.setText(df.format(auction_detail.getAccumulated_price()).toString());
+        //Current price.
+        currentPrice.setText(df.format(auction_detail.getAccumulated_price()));
+        animationBounce = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+        if (auction_detail.getAccumulated_price() != prevAccumPrice) {
+            currentPrice.startAnimation(animationBounce);
+            prevAccumPrice = auction_detail.getAccumulated_price();
+        }
 
-        //Handler for timer.
+        //Handler for remaining time timer.
         final Handler aHandler = new Handler();
 
         //Timer handling.
@@ -200,8 +209,8 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
                 if (nCounter > 0) {
                     aHandler.postDelayed(this, 1000);
                 } else {
-                    //TODO:: Go and make a new request to the server and get updated status.
-                    //Toast.makeText(getApplicationContext(), "Auction timer ended!", Toast.LENGTH_LONG).show();
+                    //Make a new request to the server and get updated status.
+                    callAsyncAuctionDetails();
                 }
             }
         };
@@ -353,5 +362,14 @@ public class AuctionActivity extends AppCompatActivity implements AsyncResponseD
         oal.updateRemainingBids(remBids -1);
 
     } // End CreateClient Method
+
+
+
+    public void callAsyncAuctionDetails(){
+        //call to async class
+        GetJSONDetailFromServer asyncTask = new GetJSONDetailFromServer(getApplicationContext(), this, auction_id);
+        asyncTask.delegate = this;
+        asyncTask.execute();
+    }
 
 }
